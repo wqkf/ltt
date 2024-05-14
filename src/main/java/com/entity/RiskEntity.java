@@ -42,7 +42,7 @@ public class RiskEntity implements Serializable {
 	/**
 	 * 入库时间
 	 */
-	private String stockTime;
+	private Integer stockTime;
 
 	/**
 	 * 道路状态

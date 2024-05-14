@@ -50,7 +50,7 @@ public class ThresholdEntity<T> implements Serializable {
 	 * 入庫時間
 	 */
 					
-	private String stockTime;
+	private Integer stockTime;
 	
 	/**
 	 * 溫度

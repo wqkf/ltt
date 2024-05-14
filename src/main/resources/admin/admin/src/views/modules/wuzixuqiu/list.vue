@@ -10,7 +10,7 @@
       </el-table-column>
       <el-table-column v-if="role!=3" prop="stockTime" label="入库时间">
       </el-table-column>
-      <el-table-column v-if="role==3" prop="roadStatus" label="道路状态">
+      <el-table-column v-if="role==3 || role==4" prop="roadStatus" label="道路状态">
       </el-table-column>
       <el-table-column prop="level" label="风险等级">
       </el-table-column>

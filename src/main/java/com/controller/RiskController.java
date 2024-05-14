@@ -79,17 +79,18 @@ public class RiskController {
         ThresholdEntity thresholdEntity = thresholdService.selectOne(ew1);
         int count = 0;
         if(riskEntity.getHeat() > thresholdEntity.getHeat() || riskEntity.getHumidity() > thresholdEntity.getHumidity() ||
-        riskEntity.getNum() > thresholdEntity.getNum() || riskEntity.getStockTime().compareTo(thresholdEntity.getStockTime())>0) {
+        riskEntity.getNum() > thresholdEntity.getNum() || riskEntity.getStockTime()>thresholdEntity.getStockTime()) {
             int i = riskEntity.getHeat() - thresholdEntity.getHeat();
             int j = riskEntity.getHumidity() - thresholdEntity.getHumidity();
             long z = riskEntity.getNum() - thresholdEntity.getNum();
-            if((i>10 && i<20) || (j>10 && j<20) || (z>10 && z<20)) {
+            int m = riskEntity.getStockTime() - thresholdEntity.getStockTime();
+            if((i>10 && i<20) || (j>10 && j<20) || (z>10 && z<20) || (m>10 && m<20)) {
                 count =1;
-            }else if((i>20 && i<30) || (j>20 && j<30) || (z>20 && z<30)) {
+            }else if((i>20 && i<30) || (j>20 && j<30) || (z>20 && z<30) || (m>20 && m<30)) {
                 count =2;
-            }else if ((i>30 && i<40) || (j>30 && j<40) || (z>30 && z<40)) {
+            }else if ((i>30 && i<40) || (j>30 && j<40) || (z>30 && z<40)|| (m>30 && m<40)) {
                 count =3;
-            } else if (i>40 || j>40 || z>40) {
+            } else if (i>40 || j>40 || z>40|| m>40 ) {
                 count =4;
             }
         }
@@ -98,7 +99,6 @@ public class RiskController {
 		return R.ok().put("count", count);
 	}
 	
-
 
 
 
