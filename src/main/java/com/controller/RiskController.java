@@ -9,6 +9,7 @@ import com.service.RiskService;
 import com.service.ThresholdService;
 import com.utils.MPUtil;
 import com.utils.R;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,6 +79,7 @@ public class RiskController {
         EntityWrapper<ThresholdEntity> ew1 = new EntityWrapper<>();
         ThresholdEntity thresholdEntity = thresholdService.selectOne(ew1);
         int count = 0;
+
         if(riskEntity.getHeat() > thresholdEntity.getHeat() || riskEntity.getHumidity() > thresholdEntity.getHumidity() ||
         riskEntity.getNum() > thresholdEntity.getNum() || riskEntity.getStockTime()>thresholdEntity.getStockTime()) {
             int i = riskEntity.getHeat() - thresholdEntity.getHeat();
@@ -93,6 +95,9 @@ public class RiskController {
             } else if (i>40 || j>40 || z>40|| m>40 ) {
                 count =4;
             }
+        }
+        if(StringUtils.equals(riskEntity.getRoad(),"无路")){
+            count =4;
         }
 
 

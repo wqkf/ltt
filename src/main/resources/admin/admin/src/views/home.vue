@@ -8,7 +8,6 @@
         <img src="../assets/img/warn.png" alt=""><br>
         <slot>红色预警</slot> <!-- 这里可以插入警报内容 -->
       </div>
-      <button class="close-button" @click="closeAlert">&times;</button>
     </div>
     <div class="yellow-warning" v-if="count==2">
       <div class="alert-content">
