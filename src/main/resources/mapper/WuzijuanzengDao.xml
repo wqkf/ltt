@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.WuzijuanzengDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.entity.RiskRoadEntity" id="wuzijuanzengMap">
+        <result property="wuzibianhao" column="wuzibianhao"/>
+        <result property="biaotimingcheng" column="biaotimingcheng"/>
+        <result property="wuzimingcheng" column="wuzimingcheng"/>
+        <result property="juanzengshuliang" column="juanzengshuliang"/>
+        <result property="diqu" column="diqu"/>
+        <result property="wuzileixing" column="wuzileixing"/>
+        <result property="jutidizhi" column="jutidizhi"/>
+        <result property="yonghuming" column="yonghuming"/>
+        <result property="xingming" column="xingming"/>
+        <result property="shoujihao" column="shoujihao"/>
+        <result property="juanzengshijian" column="juanzengshijian"/>
+    </resultMap>
+
+	<select id="selectListVO"
+		resultType="com.entity.vo.WuzijuanzengVO" >
+		SELECT * FROM wuzijuanzeng  wuzijuanzeng         
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectVO"
+		resultType="com.entity.vo.WuzijuanzengVO" >
+		SELECT  wuzijuanzeng.* FROM wuzijuanzeng  wuzijuanzeng 	
+ 		<where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+
+    <select id="selectListView"
+		resultType="com.entity.view.RiskRoadView" >
+
+		SELECT  wuzijuanzeng.* FROM wuzijuanzeng  wuzijuanzeng 	        
+        <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+	<select id="selectView"
+		resultType="com.entity.view.RiskRoadView" >
+		SELECT * FROM wuzijuanzeng  wuzijuanzeng <where> 1=1 ${ew.sqlSegment}</where>
+	</select>
+	
+
+</mapper>
