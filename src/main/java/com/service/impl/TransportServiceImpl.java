@@ -1,5 +1,7 @@
 package com.service.impl;
 
+import com.dao.TransportDao;
+import com.entity.TransportEntity;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.List;
@@ -12,23 +14,19 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.WuzileixingDao;
 import com.entity.WuzileixingEntity;
-import com.service.WuzileixingService;
+import com.service.TransportService;
 import com.entity.vo.WuzileixingVO;
 import com.entity.view.WuzileixingView;
 
 @Service("wuzileixingService")
-public class WuzileixingServiceImpl extends ServiceImpl<WuzileixingDao, WuzileixingEntity> implements WuzileixingService {
+public class TransportServiceImpl extends ServiceImpl<TransportDao, TransportEntity> implements TransportService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<WuzileixingEntity> page = this.selectPage(
-                new Query<WuzileixingEntity>(params).getPage(),
-                new EntityWrapper<WuzileixingEntity>()
-        );
-        return new PageUtils(page);
+
+        return null;
     }
     
     @Override

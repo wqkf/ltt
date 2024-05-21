@@ -15,6 +15,13 @@
             <el-menu-item :index="1-1" @click="menuHandler('updatePassword')">我的审批</el-menu-item>
             <el-menu-item :index="1-2" @click="menuHandler('center')">个人信息</el-menu-item>
           </el-submenu>
+      <el-submenu :index="1+''" v-if="role==4">
+        <template slot="title" >
+          <i v-if="true" class="el-icon-menu el-icon-user-solid" />
+          <span>审批管理</span>
+        </template>
+        <el-menu-item :index="1-1" @click="menuHandler('wuzijuanzeng')">我的审批</el-menu-item>
+      </el-submenu>
           <el-submenu v-for=" (menu,index) in item.backMenu" :key="menu.menu" :index="index+2+''">
             <template slot="title">
 				<i v-if="true" class="el-icon-menu" :class="icons[index]" />

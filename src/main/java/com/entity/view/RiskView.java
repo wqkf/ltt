@@ -29,4 +29,9 @@ public class RiskView  extends RiskEntity implements Serializable {
 	 * 頁碼
 	 */
 	private Integer page =1;
+
+	/**
+	 * 预警等级
+	 */
+	private String level;
 }

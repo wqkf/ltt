@@ -16,7 +16,7 @@
 <!--      </el-table-column>-->
 <!--      <el-table-column prop="road" label="道路状态">-->
 <!--      </el-table-column>-->
-      <el-table-column prop="address" label="配送中心">
+      <el-table-column prop="address" label="储备点">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -123,7 +123,7 @@ export default {
     }
   },
   mounted() {
-    this.role = 2;
+    this.role = 1;
     let params= {
       "role": this.role
     }

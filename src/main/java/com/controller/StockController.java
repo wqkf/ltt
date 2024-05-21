@@ -8,6 +8,8 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
+import com.entity.ThresholdEntity;
+import com.service.ThresholdService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +43,8 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
-
+    @Autowired
+    private ThresholdService thresholdService;
     
 
 
@@ -120,8 +123,12 @@ public class StockController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody StockEntity wuziruku, HttpServletRequest request){
-    	//ValidatorUtils.validateEntity(wuziruku);
         stockService.insert(wuziruku);
+        ThresholdEntity thresholdEntity = new ThresholdEntity();
+        thresholdEntity.setAddress(wuziruku.getAddress());
+        thresholdEntity.setRole(1);
+        thresholdEntity.setRelationId(wuziruku.getId());
+        thresholdService.insert(thresholdEntity);
         return R.ok();
     }
     

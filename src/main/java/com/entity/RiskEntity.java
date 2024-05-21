@@ -48,5 +48,19 @@ public class RiskEntity implements Serializable {
 	 * 道路状态
 	 */
 	private String  road;
-	
+
+	/**
+	 * 地址
+	 */
+	private String address;
+
+	/**
+	 * 角色
+	 */
+	private Integer role;
+
+	/**
+	 * 关联id
+	 */
+	private Integer relationId;
 }

@@ -1,30 +1,28 @@
 package com.controller;
 
+import com.annotation.IgnoreAuth;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.entity.ApproveEntity;
+import com.entity.YonghuEntity;
+import com.entity.view.ApproveView;
+import com.service.ApproveService;
+import com.service.YonghuService;
+import com.utils.MPUtil;
+import com.utils.PageUtils;
+import com.utils.R;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.annotation.IgnoreAuth;
-
-import com.entity.ApproveEntity;
-import com.entity.view.ApproveView;
-
-import com.service.ApproveService;
-import com.utils.PageUtils;
-import com.utils.R;
-import com.utils.MPUtil;
+import java.util.Map;
 
 /**
  * 地区
@@ -39,16 +37,19 @@ public class ApproveController {
     @Autowired
     private ApproveService approveService;
 
+    @Autowired
+    private YonghuService yonghuService;
+
     /**
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params, ApproveEntity diqu,
+    public R page(@RequestBody ApproveView approveView,
                   HttpServletRequest request){
-        EntityWrapper<ApproveEntity> ew = new EntityWrapper<ApproveEntity>();
-		PageUtils page = approveService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, diqu), params), params));
-
-        return R.ok().put("data", page);
+        EntityWrapper<ApproveEntity> ew = new EntityWrapper<>();
+        Page<ApproveEntity> page = new Page<>(approveView.getPage(),10);
+        Page<ApproveEntity> result = approveService.selectPage(page, ew);
+        return R.ok().put("data", result);
     }
     
     /**
@@ -79,7 +80,7 @@ public class ApproveController {
     @RequestMapping("/query")
     public R query(HttpServletRequest request){
         Long id = (Long)request.getSession().getAttribute("userId");
-        EntityWrapper<ApproveEntity> ew = new EntityWrapper<ApproveEntity>();
+        EntityWrapper<ApproveEntity> ew = new EntityWrapper<>();
         ew.eq("user_id", id);
 		ApproveEntity diquView =  approveService.selectOne(ew);
 		return R.ok("查询审批成功").put("data", diquView);
@@ -135,7 +136,22 @@ public class ApproveController {
     @RequestMapping("/update")
     @Transactional
     public R update(@RequestBody ApproveEntity diqu, HttpServletRequest request){
-        //ValidatorUtils.validateEntity(diqu);
+        diqu.setStatus("已审批");
+        approveService.updateById(diqu);//全部更新
+        YonghuEntity yonghu = new YonghuEntity();
+        BeanUtils.copyProperties(diqu, yonghu);
+        yonghu.setId(diqu.getUserId());
+        yonghuService.updateById(yonghu);//全部更新
+        return R.ok();
+    }
+
+    /**
+     * 修改
+     */
+    @RequestMapping("/reject")
+    @Transactional
+    public R reject(@RequestBody ApproveEntity diqu, HttpServletRequest request){
+        diqu.setStatus("已审批");
         approveService.updateById(diqu);//全部更新
         return R.ok();
     }

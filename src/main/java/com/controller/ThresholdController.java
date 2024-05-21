@@ -1,30 +1,27 @@
 package com.controller;
 
+import com.annotation.IgnoreAuth;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.entity.ThresholdEntity;
+import com.entity.view.ThresholdView;
+import com.service.ThresholdService;
+import com.service.YonghuService;
+import com.utils.MPUtil;
+import com.utils.PageUtils;
+import com.utils.R;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.annotation.IgnoreAuth;
-
-import com.entity.ThresholdEntity;
-import com.entity.view.ThresholdView;
-
-import com.service.ThresholdService;
-import com.utils.PageUtils;
-import com.utils.R;
-import com.utils.MPUtil;
+import java.util.Map;
 
 /**
  * 物资筹措
@@ -40,7 +37,8 @@ public class ThresholdController {
     private ThresholdService thresholdService;
 
 
-    
+    @Autowired
+    private YonghuService yonghuService;
 
 
     /**
@@ -70,21 +68,28 @@ public class ThresholdController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( ThresholdEntity wuzichoucuo){
+    public R list( @RequestBody ThresholdEntity wuzichoucuo){
        	EntityWrapper<ThresholdEntity> ew = new EntityWrapper<ThresholdEntity>();
       	ew.allEq(MPUtil.allEQMapPre( wuzichoucuo, "wuzichoucuo")); 
         return R.ok().put("data", thresholdService.selectListView(ew));
     }
 
-	 /**
+    /**
      * 查询
      */
     @RequestMapping("/query")
-    public R query(ThresholdEntity wuzichoucuo){
-        EntityWrapper<ThresholdEntity> ew = new EntityWrapper<ThresholdEntity>();
- 		ew.allEq(MPUtil.allEQMapPre( wuzichoucuo, "wuzichoucuo")); 
-		ThresholdView wuzichoucuoView =  thresholdService.selectView(ew);
-		return R.ok("查询物资筹措成功").put("data", wuzichoucuoView);
+    public R query(@RequestBody ThresholdView stockView, HttpServletRequest request){
+        if(stockView.getRole() == 3) {
+            Long userId = (Long)request.getSession().getAttribute("userId");
+            stockView.setRelationId(userId);
+        }
+        ThresholdEntity stock = new ThresholdEntity();
+        BeanUtils.copyProperties(stockView, stock);
+        EntityWrapper<ThresholdEntity> ew = new EntityWrapper<>();
+        ew.allEq(MPUtil.allEQMapPre( stock, "threshold"));
+        Page<ThresholdEntity> page = new Page<>(stockView.getPage(),10);
+        Page<ThresholdEntity> result = thresholdService.selectPage(page, ew);
+        return R.ok("查询物资入库成功").put("data", result);
     }
 	
     /**
@@ -140,7 +145,6 @@ public class ThresholdController {
     @RequestMapping("/update")
     @Transactional
     public R update(@RequestBody ThresholdEntity wuzichoucuo, HttpServletRequest request){
-        //ValidatorUtils.validateEntity(wuzichoucuo);
         thresholdService.updateById(wuzichoucuo);//全部更新
         return R.ok();
     }

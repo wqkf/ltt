@@ -1,9 +1,10 @@
 package com.dao;
 
+import com.entity.TransportEntity;
 import com.entity.WuzileixingEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import java.util.List;
-import java.util.Map;
+
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
@@ -19,7 +20,7 @@ import com.entity.view.WuzileixingView;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-public interface WuzileixingDao extends BaseMapper<WuzileixingEntity> {
+public interface TransportDao extends BaseMapper<TransportEntity> {
 	
 	List<WuzileixingVO> selectListVO(@Param("ew") Wrapper<WuzileixingEntity> wrapper);
 	

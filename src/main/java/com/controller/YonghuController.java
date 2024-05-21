@@ -8,7 +8,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import com.entity.ApproveEntity;
+import com.entity.ThresholdEntity;
 import com.service.ApproveService;
+import com.service.ThresholdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +43,8 @@ public class YonghuController {
     @Autowired
     private YonghuService yonghuService;
 
-
+	@Autowired
+	private ThresholdService thresholdService;
     
 	@Autowired
 	private ApproveService approveService;
@@ -72,7 +75,12 @@ public class YonghuController {
 			return R.error("注册用户已存在");
 		}
 		yonghu.setRole(3);
-        yonghuService.insert(yonghu);
+		yonghuService.insert(yonghu);
+		ThresholdEntity thresholdEntity = new ThresholdEntity();
+		thresholdEntity.setRelationId(yonghu.getId());
+		thresholdEntity.setRole(3);
+		thresholdEntity.setAddress(yonghu.getName());
+		thresholdService.insert(thresholdEntity);
         return R.ok();
     }
 

@@ -13,15 +13,15 @@ import register from '@/views/register'
 import center from '@/views/center'
     import gongyingshang from '@/views/gongyingshang/list'
     import wuzixuqiu from '@/views/modules/wuzixuqiu/list'
-    // import wuzijuanzeng from '@/views/modules/wuzijuanzeng/list'
+    import wuzijuanzeng from '@/views/wuzijuanzeng/list'
     import yonghu from '@/views/yonghu/list'
-    // import diqu from '@/views/modules/diqu/list'
-    // import yingjiwuzi from '@/views/modules/yingjiwuzi/list'
-    // import wuziruku from '@/views/modules/wuziruku/list'
-    // import wuzichoucuo from '@/views/modules/wuzichoucuo/list'
+    import diqu from '@/views/diqu/list'
+    import yingjiwuzi from '@/views/yingjiwuzi/list'
+    import wuziruku from '@/views/wuziruku/list'
+    import wuzichoucuo from '@/views/wuzichoucuo/list'
     import wuzileixing from '@/views/wuzileixing/list'
-    // import wuzichuku from '@/views/modules/wuzichuku/list'
-
+    import wuzichuku from '@/views/wuzichuku/list'
+    import threshold from '@/views/threshold/list'
 
 //2.配置路由   注意：名字
 const routes = [{
@@ -52,7 +52,7 @@ const routes = [{
     }
       ,{
 	path: '/threshold',
-        name: '风险阈值设置',
+        name: '风险分析与预警',
         component: gongyingshang
       }
       ,{
@@ -60,46 +60,50 @@ const routes = [{
         name: '风险等级划分',
         component: wuzixuqiu
       }
-    //   ,{
-	// path: '/wuzijuanzeng',
-    //     name: '物资捐赠',
-    //     component: wuzijuanzeng
-    //   }
+      ,{
+	path: '/wuzijuanzeng',
+        name: '我的审批',
+        component: wuzijuanzeng
+      }
       ,{
 	path: '/yonghu',
         name: '風險信息',
         component: yonghu
       }
-    //   ,{
-	// path: '/diqu',
-    //     name: '地区',
-    //     component: diqu
-    //   }
-    //   ,{
-	// path: '/yingjiwuzi',
-    //     name: '应急物资',
-    //     component: yingjiwuzi
-    //   }
-    //   ,{
-	// path: '/wuziruku',
-    //     name: '物资入库',
-    //     component: wuziruku
-    //   }
-    //   ,{
-	// path: '/wuzichoucuo',
-    //     name: '物资筹措',
-    //     component: wuzichoucuo
-    //   }
+      ,{
+	path: '/diqu',
+        name: '配送中心信息管理',
+        component: diqu
+      }
+      ,{
+	path: '/yingjiwuzi',
+        name: '风险预警设置',
+        component: yingjiwuzi
+      }
+      ,{
+	path: '/wuziruku',
+        name: '风险信息',
+        component: wuziruku
+      }
+      ,{
+	path: '/wuzichoucuo',
+        name: '物资筹措',
+        component: wuzichoucuo
+      }
       ,{
 	path: '/wuzileixing',
-        name: '配送中心信息管理',
+        name: '储备点信息管理',
         component: wuzileixing
       }
-    //   ,{
-	// path: '/wuzichuku',
-    //     name: '物资出库',
-    //     component: wuzichuku
-    //   }
+      ,{
+	path: '/wuzichuku',
+        name: '风险等级划分',
+        component: wuzichuku
+      },{
+        path: '/threshold3',
+        name: '设置阈值',
+        component: threshold
+      }
     ]
   },
   {

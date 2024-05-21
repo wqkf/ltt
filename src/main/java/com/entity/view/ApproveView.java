@@ -1,10 +1,9 @@
 package com.entity.view;
 
-import com.entity.ApproveEntity;
-
 import com.baomidou.mybatisplus.annotations.TableName;
-import org.apache.commons.beanutils.BeanUtils;
-import java.lang.reflect.InvocationTargetException;
+import com.entity.ApproveEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
  
@@ -17,20 +16,13 @@ import java.io.Serializable;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-@TableName("diqu")
+@EqualsAndHashCode(callSuper = true)
+@TableName("approve")
+@Data
 public class ApproveView extends ApproveEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	public ApproveView(){
-	}
- 
- 	public ApproveView(ApproveEntity approveEntity){
- 	try {
-			BeanUtils.copyProperties(this, approveEntity);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
- 		
-	}
+	/**
+	 * 頁碼
+	 */
+	private Integer page =1;
 }

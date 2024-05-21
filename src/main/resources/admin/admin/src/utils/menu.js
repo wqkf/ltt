@@ -13,15 +13,22 @@ const menu = {
                                     "修改",
                                     "删除"
                                 ],
-                                "menu": "配送中心信息管理",
+                                "menu": "储备点信息管理",
                                 "menuJump": "列表",
                                 "tableName": "wuzileixing"
-                            }
-                        ],
-                        "menu": "储备点信息管理"
-                    },
-                    {
-                        "child": [
+                            },
+                            {
+                                "appFrontIcon": "cuIcon-similar",
+                                "buttons": [
+                                    "新增",
+                                    "查看",
+                                    "修改",
+                                    "删除"
+                                ],
+                                "menu": "风险阈值设置",
+                                "menuJump": "列表",
+                                "tableName": "yingjiwuzi"
+                            },
                             {
                                 "appFrontIcon": "cuIcon-goodsnew",
                                 "buttons": [
@@ -33,9 +40,72 @@ const menu = {
                                 "menu": "风险信息",
                                 "menuJump": "列表",
                                 "tableName": "yonghu"
+                            },{
+                        "appFrontIcon": "cuIcon-similar",
+                        "buttons": [
+                            "新增",
+                            "查看",
+                            "修改",
+                            "删除"
+                        ],
+                        "menu": "风险等级划分",
+                        "menuJump": "列表",
+                        "tableName": "wuzichuku"
+                    }
+                        ],
+                        "menu": "应急储备点"
+                    },
+                    {
+                        "child": [
+                            {
+                                "appFrontIcon": "cuIcon-present",
+                                "buttons": [
+                                    "新增",
+                                    "查看",
+                                    "修改",
+                                    "删除"
+                                ],
+                                "menu": "配送中心信息管理",
+                                "menuJump": "列表",
+                                "tableName": "diqu"
+                            },
+                            {
+                                "appFrontIcon": "cuIcon-similar",
+                                "buttons": [
+                                    "新增",
+                                    "查看",
+                                    "修改",
+                                    "删除"
+                                ],
+                                "menu": "风险阈值设置",
+                                "menuJump": "列表",
+                                "tableName": "threshold"
+                            },
+                            {
+                                "appFrontIcon": "cuIcon-goodsnew",
+                                "buttons": [
+                                    "新增",
+                                    "查看",
+                                    "修改",
+                                    "删除"
+                                ],
+                                "menu": "风险信息",
+                                "menuJump": "列表",
+                                "tableName": "wuziruku"
+                            },{
+                                "appFrontIcon": "cuIcon-similar",
+                                "buttons": [
+                                    "新增",
+                                    "查看",
+                                    "修改",
+                                    "删除"
+                                ],
+                                "menu": "风险等级划分",
+                                "menuJump": "列表",
+                                "tableName": "wuzichuku"
                             }
                         ],
-                        "menu": "物流风险管理"
+                        "menu": "配送中心"
                     },
                     {
                         "child": [
@@ -49,7 +119,7 @@ const menu = {
                                 ],
                                 "menu": "风险等级划分",
                                 "menuJump": "列表",
-                                "tableName": "wuzixuqiu"
+                                "tableName": "wuzichoucuo"
                             },
                             {
                                 "appFrontIcon": "cuIcon-similar",
@@ -61,10 +131,10 @@ const menu = {
                                 ],
                                 "menu": "风险阈值设置",
                                 "menuJump": "列表",
-                                "tableName": "threshold"
+                                "tableName": "threshold3"
                             }
                         ],
-                        "menu": "风险阈值设置"
+                        "menu": "运输人员"
                     }
                 ],
                 "frontMenu": [
@@ -103,7 +173,7 @@ const menu = {
                                 ],
                                 "menu": "风险阈值设置",
                                 "menuJump": "列表",
-                                "tableName": "threshold"
+                                "tableName": "threshold3"
                             }
                         ],
                         "menu": "风险阈值设置"
@@ -174,10 +244,10 @@ const menu = {
                                 ],
                                 "menu": "配送中心信息管理",
                                 "menuJump": "列表",
-                                "tableName": "wuzileixing"
+                                "tableName": "diqu"
                             }
                         ],
-                        "menu": "储备点信息管理"
+                        "menu": "配送中心"
                     },
                     {
                         "child": [
@@ -191,7 +261,7 @@ const menu = {
                                 ],
                                 "menu": "风险信息",
                                 "menuJump": "列表",
-                                "tableName": "yonghu"
+                                "tableName": "wuziruku"
                             }
                         ],
                         "menu": "物流风险管理"
@@ -247,12 +317,12 @@ const menu = {
                                     "修改",
                                     "删除"
                                 ],
-                                "menu": "配送中心信息管理",
+                                "menu": "储备点信息管理",
                                 "menuJump": "列表",
                                 "tableName": "wuzileixing"
                             }
                         ],
-                        "menu": "储备点信息管理"
+                        "menu": "应急储备点"
                     },
                     {
                         "child": [

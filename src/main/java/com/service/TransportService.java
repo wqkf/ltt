@@ -2,6 +2,7 @@ package com.service;
 
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.IService;
+import com.entity.TransportEntity;
 import com.utils.PageUtils;
 import com.entity.WuzileixingEntity;
 import java.util.List;
@@ -18,7 +19,7 @@ import com.entity.view.WuzileixingView;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-public interface WuzileixingService extends IService<WuzileixingEntity> {
+public interface TransportService extends IService<TransportEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
     

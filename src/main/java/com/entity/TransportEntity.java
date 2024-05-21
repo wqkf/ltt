@@ -11,23 +11,23 @@ import java.lang.reflect.InvocationTargetException;
 
 
 /**
- * 物资筹措
+ * 物资入库
  * 数据库通用操作实体类（普通增删改查）
  * @author 
  * @email 
  * @date 2022-07-24 20:15:33
  */
-@TableName("threshold")
+@TableName("transport")
 @Data
-public class ThresholdEntity<T> implements Serializable {
+public class TransportEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	public ThresholdEntity() {
-		
+	public TransportEntity() {
+
 	}
-	
-	public ThresholdEntity(T t) {
+
+	public TransportEntity(T t) {
 		try {
 			BeanUtils.copyProperties(this, t);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -42,46 +42,27 @@ public class ThresholdEntity<T> implements Serializable {
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
-	 * 入庫時間
+	 * 地址
 	 */
 					
-	private Integer stockTime;
+	private String address;
 	
 	/**
-	 * 溫度
+	 * 种类
 	 */
 					
-	private Integer heat;
+	private String category;
 	
 	/**
-	 * 濕度
+	 * 入库时间
 	 */
 					
-	private Integer humidity;
+	private String stockTime;
 	
 	/**
-	 * 儲存数量
+	 * 储存数量
 	 */
 					
 	private Integer num;
 
-	/**
-	 * 道路状态
-	 */
-	private String road;
-
-	/**
-	 * 地址信息
-	 */
-	private String address;
-
-	/**
-	 * 角色
-	 */
-	private Integer role;
-
-	/**
-	 * 运输人员
-	 */
-	private Long relationId;
 }

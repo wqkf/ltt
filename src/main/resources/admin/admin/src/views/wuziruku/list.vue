@@ -2,8 +2,8 @@
   <div style="padding: 20px;">
     <!-- 搜索栏 -->
     <el-form :inline="true" class="demo-form-inline">
-      <el-form-item label="储备点">
-        <el-input v-model="address" placeholder="储备点"></el-input>
+      <el-form-item label="配送中心">
+        <el-input v-model="address" placeholder="配送中心"></el-input>
       </el-form-item>
       <el-form-item label="时间">
         <el-input v-model="monitorTime" placeholder="时间"></el-input>
@@ -17,7 +17,7 @@
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column v-if="false" prop="id" label="zhujian">
       </el-table-column>
-      <el-table-column prop="address" label="储备点" width="180">
+      <el-table-column prop="address" label="配送中心" width="180">
       </el-table-column>
       <el-table-column prop="heat" label="温度" width="180">
       </el-table-column>
@@ -178,7 +178,7 @@ export default {
       let params = {
         address: this.address,
         monitorTime: this.monitorTime,
-        role: 1
+        role: 2
       }
       this.query(params);
 
@@ -188,7 +188,7 @@ export default {
       let params = {
         address: this.address,
         monitorTime: this.monitorTime,
-        role: 1,
+        role: 2,
         rows: r,
         page: this.page
       }
@@ -200,7 +200,7 @@ export default {
       let params = {
         address: this.address,
         monitorTime: this.monitorTime,
-        role: 1,
+        role: 2,
         page: p,
         rows: this.rows
       }

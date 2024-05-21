@@ -1,26 +1,41 @@
 <template>
   <div style="padding: 20px;">
+    <!-- 搜索栏 -->
+    <el-form :inline="true" class="demo-form-inline" :model="book" ref="book">
+      <el-form-item label="地址信息">
+        <el-input v-model="address" placeholder="地址信息"></el-input>
+      </el-form-item>
+      <el-form-item label="粮食种类">
+        <el-input v-model="category" placeholder="粮食种类"></el-input>
+      </el-form-item>
+      <el-form-item label="存储数量">
+        <el-input v-model="num" placeholder="存储数量"></el-input>
+      </el-form-item>
+      <el-form-item label="入库时间">
+        <el-input v-model="stockTime" placeholder="入库时间"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="success" @click="open(null)">新增</el-button>
+      </el-form-item>
+    </el-form>
     <!-- 数据表格 -->
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column v-if="false" prop="id" label="zhujian">
+      <el-table-column v-if="false" prop="id" label="地址信息" width="180">
       </el-table-column>
-      <el-table-column prop="heat" label="温度" width="180">
+      <el-table-column prop="address" label="地址信息" width="180">
       </el-table-column>
-      <el-table-column prop="humidity" label="湿度" width="180">
+      <el-table-column prop="category" label="粮食种类" width="180">
       </el-table-column>
       <el-table-column prop="num" label="粮食存储数量">
       </el-table-column>
-      <el-table-column prop="stockTime" label="粮食存储时间">
-      </el-table-column>
-<!--      <el-table-column prop="road" label="道路状态">-->
-<!--      </el-table-column>-->
-<!--      <el-table-column prop="road" label="道路状态">-->
-<!--      </el-table-column>-->
-      <el-table-column prop="address" label="配送中心">
+      <el-table-column prop="stockTime" label="粮食入库时间">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
+          <!-- {{scope.row}} -->
           <el-button size="mini" @click="open(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="del(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -38,27 +53,24 @@
         </el-form-item>
 
         <el-form-item label="地址信息" :label-width="formLabelWidth">
-          <el-input v-model="book.address" readonly autocomplete="off"></el-input>
+          <el-input v-model="book.address" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="温度" :label-width="formLabelWidth" prop="heat">
-          <el-input v-model="book.heat" autocomplete="off"></el-input>
+        <el-form-item label="粮食种类" :label-width="formLabelWidth" prop="category">
+          <el-input v-model="book.category" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="湿度" :label-width="formLabelWidth" prop="humidity">
-          <el-input v-model="book.humidity" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="粮食存储数量" :label-width="formLabelWidth" prop="num">
+        <el-form-item label="存储数量" :label-width="formLabelWidth" prop="num">
           <el-input v-model="book.num" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="粮食存储时间" :label-width="formLabelWidth" prop="stockTime">
+        <el-form-item label="入库时间" :label-width="formLabelWidth" prop="stockTime">
           <el-input v-model="book.stockTime" autocomplete="off"></el-input>
-          <!--          <el-select v-model="book.booktype" placeholder="请选择书籍类别">-->
-          <!--            <el-option :key="'key_'+by.id" v-for="by in booktypes" :label="by.name" :value="by.name"></el-option>-->
-          <!--          </el-select>-->
+<!--          <el-select v-model="book.booktype" placeholder="请选择书籍类别">-->
+<!--            <el-option :key="'key_'+by.id" v-for="by in booktypes" :label="by.name" :value="by.name"></el-option>-->
+<!--          </el-select>-->
         </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="clear()">取 消</el-button>
@@ -72,15 +84,16 @@
 export default {
   data() {
     return {
-      heat: '',
-      humidity: '',
-      role: '',
+      address: '',
+      category: '',
       num:  '',
       stockTime: '',
       tableData: [],
       page: 1,
       rows: 10,
       total: 0,
+      //0727
+      title: '新增窗体',
       dialogFormVisible: false,
       booktypes: [{
         id: 1,
@@ -102,7 +115,6 @@ export default {
         num: '',
         address: ''
       },
-      title: '设置阈值',
       rules: {
         category: [{
           required: true,
@@ -122,30 +134,43 @@ export default {
       }
     }
   },
-  mounted() {
-    this.role = 2;
-    let params= {
-      "role": this.role
-    }
-    this.query(params)
-  },
   methods: {
-    clear() {
-      //清空表单方法
-      this.dialogFormVisible = false;
-      this.book = {
-        id: '',
-        address: '',
-        num: '',
-        heat: '',
-        humidity: '',
-        stockTime: ''
-      };
+    del(idx, row) {
+      this.$confirm('确定要删除id为' + row.id + '的配送中心信息吗, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        let url = "transport/delete";
+        this.$http({
+          url: url,
+          method: "post",
+          data: row
+        }).then(({data}) => {
+          if (data && data.code === 0) {
+            this.$message({
+              message: "删除成功",
+              type: 'success'
+            });
+            this.query({});
+          } else {
+            this.$message({
+              message: data.msg,
+              type: 'error'
+            });
+          }
+        }).catch(err => {
+
+        });
+      })
 
     },
     doSub() {
       //新增或者编辑提交到后台的方法
-      let url = "threshold/update";
+      let url = "transport/save";
+      if (this.title == '编辑窗体') {
+        url = "stock/update";
+      }
       let params = {
         id: this.book.id,
         address: this.book.address,
@@ -170,10 +195,7 @@ export default {
                 type: 'success'
               });
               this.clear();
-              let params= {
-                "role": this.role
-              }
-              this.query(params);
+              this.query({});
             } else {
               this.$message.error(data.msg);
             }
@@ -183,26 +205,40 @@ export default {
 
           console.log('error submit!!');
           return false;
+
         }
       });
 
+
+    },
+    clear() {
+      //清空表单方法
+      this.title = '新增窗体'
+      this.dialogFormVisible = false;
+      this.book = {
+        id: '',
+        address: '',
+        num: '',
+        category: '',
+        stockTime: ''
+      };
 
     },
     open(idx, row) {
       //打开添加/编辑书籍信息的窗体
       this.dialogFormVisible = true;
       if (row) {
-        this.book.humidity = row.humidity  ;
+        this.title = '编辑窗体';
         this.book.id = row.id;
         this.book.address = row.address;
-        this.book.heat = row.heat;
+        this.book.category = row.category;
         this.book.num = row.num;
         this.book.stockTime = row.stockTime;
       }
     },
     query(params) {
       //通用查询方法
-      let url = "threshold/query";
+      let url = "transport/query";
       this.$http({
         url: url,
         method: "post",
@@ -218,9 +254,9 @@ export default {
     onSubmit() {
       //搜索方法
       let params = {
-        heat: this.heat,
+        address: this.address,
         num: this.num,
-        humidity: this.humidity,
+        category: this.category,
         stockTime: this.stockTime
       }
       this.query(params);
@@ -229,7 +265,10 @@ export default {
     handleSizeChange(r) {
       console.log("当前展示的记录数为" + r + "条")
       let params = {
-        role: this.role,
+        address: this.address,
+        num: this.num,
+        category: this.category,
+        stockTime: this.stockTime,
         rows: r,
         page: this.page
       }
@@ -239,7 +278,10 @@ export default {
     handleCurrentChange(p) {
       console.log("当前展示的页码是第" + p + "页")
       let params = {
-        role: this.role,
+        address: this.address,
+        num: this.num,
+        category: this.category,
+        stockTime: this.stockTime,
         page: p,
         rows: this.rows
       }

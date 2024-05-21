@@ -205,7 +205,6 @@ export default {
 
           console.log('error submit!!');
           return false;
-
         }
       });
 

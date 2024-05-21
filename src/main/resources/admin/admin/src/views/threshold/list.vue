@@ -8,15 +8,15 @@
       </el-table-column>
       <el-table-column prop="humidity" label="湿度" width="180">
       </el-table-column>
-      <el-table-column prop="num" label="粮食存储数量">
-      </el-table-column>
-      <el-table-column prop="stockTime" label="粮食存储时间">
-      </el-table-column>
-<!--      <el-table-column prop="road" label="道路状态">-->
+<!--      <el-table-column prop="num" label="粮食存储数量">-->
+<!--      </el-table-column>-->
+<!--      <el-table-column prop="stockTime" label="粮食存储时间">-->
 <!--      </el-table-column>-->
 <!--      <el-table-column prop="road" label="道路状态">-->
 <!--      </el-table-column>-->
-      <el-table-column prop="address" label="配送中心">
+<!--      <el-table-column prop="road" label="道路状态">-->
+<!--      </el-table-column>-->
+      <el-table-column prop="address" label="运输人员">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -37,7 +37,7 @@
           <el-input v-model="book.id" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="地址信息" :label-width="formLabelWidth">
+        <el-form-item label="运输人员" :label-width="formLabelWidth">
           <el-input v-model="book.address" readonly autocomplete="off"></el-input>
         </el-form-item>
 
@@ -49,16 +49,6 @@
           <el-input v-model="book.humidity" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="粮食存储数量" :label-width="formLabelWidth" prop="num">
-          <el-input v-model="book.num" autocomplete="off"></el-input>
-        </el-form-item>
-
-        <el-form-item label="粮食存储时间" :label-width="formLabelWidth" prop="stockTime">
-          <el-input v-model="book.stockTime" autocomplete="off"></el-input>
-          <!--          <el-select v-model="book.booktype" placeholder="请选择书籍类别">-->
-          <!--            <el-option :key="'key_'+by.id" v-for="by in booktypes" :label="by.name" :value="by.name"></el-option>-->
-          <!--          </el-select>-->
-        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="clear()">取 消</el-button>
@@ -123,7 +113,7 @@ export default {
     }
   },
   mounted() {
-    this.role = 2;
+    this.role = 3;
     let params= {
       "role": this.role
     }

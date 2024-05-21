@@ -1,10 +1,9 @@
 package com.entity.view;
 
-import com.entity.ThresholdEntity;
-
 import com.baomidou.mybatisplus.annotations.TableName;
-import org.apache.commons.beanutils.BeanUtils;
-import java.lang.reflect.InvocationTargetException;
+import com.entity.ThresholdEntity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
  
@@ -17,20 +16,17 @@ import java.io.Serializable;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-@TableName("wuzichoucuo")
+@EqualsAndHashCode(callSuper = true)
+@Data
+@TableName("threshold")
 public class ThresholdView extends ThresholdEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public ThresholdView(){
 	}
- 
- 	public ThresholdView(ThresholdEntity thresholdEntity){
- 	try {
-			BeanUtils.copyProperties(this, thresholdEntity);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
- 		
-	}
+
+	/**
+	 * 页码
+	 */
+	private Integer page=1;
 }
