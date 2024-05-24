@@ -22,7 +22,7 @@ import center from '@/views/center'
     import wuzileixing from '@/views/wuzileixing/list'
     import wuzichuku from '@/views/wuzichuku/list'
     import threshold from '@/views/threshold/list'
-
+    import message from '@/views/message/list'
 //2.配置路由   注意：名字
 const routes = [{
     path: '/index',
@@ -49,6 +49,10 @@ const routes = [{
       name: '个人信息',
       component: center,
       meta: {icon:'', title:'center'}
+    },{
+      path: '/message',
+      name: '信息中心',
+      component: message
     }
       ,{
 	path: '/threshold',

@@ -112,6 +112,9 @@ public class TransportController {
     @RequestMapping("/delete")
     public R delete(@RequestBody TransportView view){
         transportService.deleteById(view.getId());
+        EntityWrapper<ThresholdEntity> ew = new EntityWrapper<>();
+        ew.eq("relation_id", view.getId());
+        thresholdService.delete(ew);
         return R.ok();
     }
 

@@ -130,13 +130,14 @@ export default {
           required: true,
           message: '请输入入库时间',
           trigger: 'blur'
-        }]
+        }] 
       }
     }
+
   },
   methods: {
     del(idx, row) {
-      this.$confirm('确定要删除id为' + row.id + '的配送中心信息吗, 是否继续?', '提示', {
+      this.$confirm('确定要删除id为' + row.id + '的信息吗, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

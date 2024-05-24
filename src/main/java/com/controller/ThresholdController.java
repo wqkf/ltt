@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.ThresholdEntity;
+import com.entity.YonghuEntity;
 import com.entity.view.ThresholdView;
 import com.service.ThresholdService;
 import com.service.YonghuService;
@@ -81,7 +82,12 @@ public class ThresholdController {
     public R query(@RequestBody ThresholdView stockView, HttpServletRequest request){
         if(stockView.getRole() == 3) {
             Long userId = (Long)request.getSession().getAttribute("userId");
-            stockView.setRelationId(userId);
+            YonghuEntity yonghuEntity = yonghuService.selectById(userId);
+            if(yonghuEntity != null && yonghuEntity.getRole() == 4) {
+
+            } else {
+                stockView.setRelationId(userId);
+            }
         }
         ThresholdEntity stock = new ThresholdEntity();
         BeanUtils.copyProperties(stockView, stock);

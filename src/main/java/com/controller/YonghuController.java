@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.ApproveEntity;
 import com.entity.ThresholdEntity;
 import com.service.ApproveService;
 import com.service.ThresholdService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -124,12 +126,17 @@ public class YonghuController {
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params,YonghuEntity yonghu,
+    public R page(@RequestBody YonghuView yonghuView,
 		HttpServletRequest request){
-        EntityWrapper<YonghuEntity> ew = new EntityWrapper<YonghuEntity>();
-		PageUtils page = yonghuService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yonghu), params), params));
+		yonghuView.setRole(3);
+		YonghuEntity yonghu = new YonghuEntity();
+		BeanUtils.copyProperties(yonghuView, yonghu);
+		EntityWrapper<YonghuEntity> ew = new EntityWrapper<YonghuEntity>();
+		ew.allEq(MPUtil.allEQMapPre( yonghu, "user"));
+		Page<YonghuEntity> page = new Page<>(yonghuView.getPage(),10);
+		Page<YonghuEntity> result = yonghuService.selectPage(page, ew);
 
-        return R.ok().put("data", page);
+		return R.ok().put("data", result);
     }
     
     /**

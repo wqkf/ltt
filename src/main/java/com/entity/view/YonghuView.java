@@ -3,6 +3,8 @@ package com.entity.view;
 import com.entity.YonghuEntity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.beanutils.BeanUtils;
 import java.lang.reflect.InvocationTargetException;
 
@@ -17,7 +19,9 @@ import java.io.Serializable;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-@TableName("yonghu")
+@EqualsAndHashCode(callSuper = true)
+@TableName("user")
+@Data
 public class YonghuView  extends YonghuEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,4 +37,9 @@ public class YonghuView  extends YonghuEntity implements Serializable {
 		}
  		
 	}
+
+	/**
+	 * 页码
+	 */
+	private Integer page=1;
 }

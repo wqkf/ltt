@@ -117,6 +117,18 @@ const menu = {
                                     "修改",
                                     "删除"
                                 ],
+                                "menu": "人员信息",
+                                "menuJump": "列表",
+                                "tableName": "message"
+                            },
+                            {
+                                "appFrontIcon": "cuIcon-similar",
+                                "buttons": [
+                                    "新增",
+                                    "查看",
+                                    "修改",
+                                    "删除"
+                                ],
                                 "menu": "风险等级划分",
                                 "menuJump": "列表",
                                 "tableName": "wuzichoucuo"
@@ -365,7 +377,7 @@ const menu = {
                                 ],
                                 "menu": "风险阈值设置",
                                 "menuJump": "列表",
-                                "tableName": "threshold"
+                                "tableName": "yingjiwuzi"
                             }
                         ],
                         "menu": "风险阈值设置"

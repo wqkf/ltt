@@ -161,6 +161,9 @@ public class StockController {
     @RequestMapping("/delete")
     public R delete(@RequestBody StockView view){
         stockService.deleteById(view.getId());
+        EntityWrapper<ThresholdEntity> ew = new EntityWrapper<>();
+        ew.eq("relation_id", view.getId());
+        thresholdService.delete(ew);
         return R.ok();
     }
     
