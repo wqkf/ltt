@@ -2,13 +2,24 @@
 package com.controller;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.entity.BookUserEntity;
 import com.entity.YonghuEntity;
+import com.entity.view.UserView;
+import com.service.BookUserService;
 import com.service.YonghuService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,17 +50,21 @@ public class UserController{
 	@Autowired
 	private YonghuService yonghuService;
 
+	@Autowired
+	private BookUserService bookUserService;
+
 	/**
 	 * 登录
 	 */
 	@IgnoreAuth
 	@PostMapping(value = "/login")
-	public R login(String username, String password, String captcha, HttpServletRequest request) {
-		YonghuEntity user = yonghuService.selectOne(new EntityWrapper<YonghuEntity>().eq("name", username));
-		if(user==null || !user.getPassword().equals(password)) {
+	public R login(@RequestBody UserEntity user1, HttpServletRequest request) {
+		UserEntity user = userService.selectOne(new EntityWrapper<UserEntity>().eq("nickname", user1.getNickname()));
+		if(user==null || !user.getPassword().equals(user1.getPassword())) {
 			return R.error("账号或密码不正确");
 		}
-		return R.ok();
+		request.getSession().setAttribute("userId", user.getId());
+		return R.ok().put("data",user);
 	}
 	
 	/**
@@ -58,8 +73,7 @@ public class UserController{
 	@IgnoreAuth
 	@PostMapping(value = "/register")
 	public R register(@RequestBody UserEntity user){
-//    	ValidatorUtils.validateEntity(user);
-    	if(userService.selectOne(new EntityWrapper<UserEntity>().eq("username", user.getUsername())) !=null) {
+    	if(userService.selectOne(new EntityWrapper<UserEntity>().eq("nickname", user.getNickname())) !=null) {
     		return R.error("用户已存在");
     	}
         userService.insert(user);
@@ -69,10 +83,53 @@ public class UserController{
 	/**
 	 * 退出
 	 */
-	@GetMapping(value = "logout")
-	public R logout(HttpServletRequest request) {
-		request.getSession().invalidate();
-		return R.ok("退出成功");
+	@GetMapping(value = "adminload")
+	public R logout(@RequestParam String nickname) {
+		Date date = new Date();
+		UserEntity user = userService.selectOne(new EntityWrapper<UserEntity>().eq("nickname", nickname));
+		UserView userView = new UserView();
+		Integer age = user.getAge();
+		Integer limit = 0;
+		if(age >= 18){
+			limit = 3;
+		} else {
+			limit = 5;
+		}
+		EntityWrapper<BookUserEntity> ew = new EntityWrapper<>();
+		ew.eq("userid", user.getId());
+		// 当前日期
+		LocalDate currentDate = LocalDate.now();
+		// 当月第一天
+		LocalDate firstDayOfMonth = currentDate.with(TemporalAdjusters.firstDayOfMonth());
+		// 当月最后一天
+		LocalDate lastDayOfMonth = currentDate.with(TemporalAdjusters.lastDayOfMonth());
+		ew.between("borrow_date", firstDayOfMonth, lastDayOfMonth);
+		int num = bookUserService.selectCount(ew);
+		if (user.getIfvip() == 1) {
+			Date deadline = user.getDeadline();
+			if (date.after(deadline)) {
+				user.setIfvip(0);
+				userService.updateById(user);
+				BeanUtils.copyProperties(user, userView);
+				if (limit-num < 0){
+					userView.setSurplus(0);
+				}else {
+					userView.setSurplus(limit - num);
+				}
+			} else{
+				BeanUtils.copyProperties(user, userView);
+			}
+
+		} else {
+			BeanUtils.copyProperties(user, userView);
+			if (limit-num < 0){
+				userView.setSurplus(0);
+			}else {
+				userView.setSurplus(limit - num);
+			}
+		}
+
+		return R.ok().put("data", userView);
 	}
 	
 	/**
@@ -129,29 +186,29 @@ public class UserController{
         return R.ok().put("data", user);
     }
 
-    /**
-     * 保存
-     */
-    @PostMapping("/save")
-    public R save(@RequestBody UserEntity user){
-//    	ValidatorUtils.validateEntity(user);
-    	if(userService.selectOne(new EntityWrapper<UserEntity>().eq("username", user.getUsername())) !=null) {
-    		return R.error("用户已存在");
-    	}
-        userService.insert(user);
-        return R.ok();
-    }
+//    /**
+//     * 保存
+//     */
+//    @PostMapping("/save")
+//    public R save(@RequestBody UserEntity user){
+////    	ValidatorUtils.validateEntity(user);
+//    	if(userService.selectOne(new EntityWrapper<UserEntity>().eq("username", user.getUsername())) !=null) {
+//    		return R.error("用户已存在");
+//    	}
+//        userService.insert(user);
+//        return R.ok();
+//    }
 
     /**
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody UserEntity user){
-//        ValidatorUtils.validateEntity(user);
-    	UserEntity u = userService.selectOne(new EntityWrapper<UserEntity>().eq("username", user.getUsername()));
-    	if(u!=null && u.getId()!=user.getId() && u.getUsername().equals(user.getUsername())) {
-    		return R.error("用户名已存在。");
-    	}
+    public R update(@RequestParam String nickname){
+    	UserEntity user = userService.selectOne(new EntityWrapper<UserEntity>().eq("nickname", nickname));
+		LocalDate today = LocalDate.now(); // 获取今天的日期
+		LocalDate sixMonthsLater = today.plusMonths(6); // 在今天的日期上加6个月
+    	user.setDeadline(Date.from(sixMonthsLater.atTime(LocalTime.MIDNIGHT).atZone(ZoneId.systemDefault()).toInstant()));
+		user.setIfvip(1);
         userService.updateById(user);//全部更新
         return R.ok();
     }

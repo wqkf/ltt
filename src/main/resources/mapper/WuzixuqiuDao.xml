@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dao.WuzixuqiuDao">
+<mapper namespace="com.dao.ActorDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.WuzixuqiuEntity" id="wuzixuqiuMap">
+    <resultMap type="com.entity.ActorEntity" id="wuzixuqiuMap">
         <result property="wuzibianhao" column="wuzibianhao"/>
         <result property="biaotimingcheng" column="biaotimingcheng"/>
         <result property="wuzimingcheng" column="wuzimingcheng"/>
@@ -29,14 +29,14 @@
 	</select>
 
     <select id="selectListView"
-		resultType="com.entity.view.WuzixuqiuView" >
+		resultType="com.entity.view.ActorView" >
 
 		SELECT  wuzixuqiu.* FROM wuzixuqiu  wuzixuqiu 	        
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
-		resultType="com.entity.view.WuzixuqiuView" >
+		resultType="com.entity.view.ActorView" >
 		SELECT * FROM wuzixuqiu  wuzixuqiu <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	

@@ -18,10 +18,10 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.annotation.IgnoreAuth;
 
-import com.entity.WuzixuqiuEntity;
-import com.entity.view.WuzixuqiuView;
+import com.entity.ActorEntity;
+import com.entity.view.ActorView;
 
-import com.service.WuzixuqiuService;
+import com.service.ActorService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
@@ -37,7 +37,7 @@ import com.utils.MPUtil;
 @RequestMapping("/wuzixuqiu")
 public class WuzixuqiuController {
     @Autowired
-    private WuzixuqiuService wuzixuqiuService;
+    private ActorService actorService;
 
 
     
@@ -47,10 +47,10 @@ public class WuzixuqiuController {
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params,WuzixuqiuEntity wuzixuqiu,
-		HttpServletRequest request){
-        EntityWrapper<WuzixuqiuEntity> ew = new EntityWrapper<WuzixuqiuEntity>();
-		PageUtils page = wuzixuqiuService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, wuzixuqiu), params), params));
+    public R page(@RequestParam Map<String, Object> params, ActorEntity wuzixuqiu,
+                  HttpServletRequest request){
+        EntityWrapper<ActorEntity> ew = new EntityWrapper<ActorEntity>();
+		PageUtils page = actorService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, wuzixuqiu), params), params));
 
         return R.ok().put("data", page);
     }
@@ -59,10 +59,10 @@ public class WuzixuqiuController {
      * 前端列表
      */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params,WuzixuqiuEntity wuzixuqiu, 
-		HttpServletRequest request){
-        EntityWrapper<WuzixuqiuEntity> ew = new EntityWrapper<WuzixuqiuEntity>();
-		PageUtils page = wuzixuqiuService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, wuzixuqiu), params), params));
+    public R list(@RequestParam Map<String, Object> params, ActorEntity wuzixuqiu,
+                  HttpServletRequest request){
+        EntityWrapper<ActorEntity> ew = new EntityWrapper<ActorEntity>();
+		PageUtils page = actorService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, wuzixuqiu), params), params));
         return R.ok().put("data", page);
     }
 
@@ -70,20 +70,20 @@ public class WuzixuqiuController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( WuzixuqiuEntity wuzixuqiu){
-       	EntityWrapper<WuzixuqiuEntity> ew = new EntityWrapper<WuzixuqiuEntity>();
+    public R list( ActorEntity wuzixuqiu){
+       	EntityWrapper<ActorEntity> ew = new EntityWrapper<ActorEntity>();
       	ew.allEq(MPUtil.allEQMapPre( wuzixuqiu, "wuzixuqiu")); 
-        return R.ok().put("data", wuzixuqiuService.selectListView(ew));
+        return R.ok().put("data", actorService.selectListView(ew));
     }
 
 	 /**
      * 查询
      */
     @RequestMapping("/query")
-    public R query(WuzixuqiuEntity wuzixuqiu){
-        EntityWrapper< WuzixuqiuEntity> ew = new EntityWrapper< WuzixuqiuEntity>();
+    public R query(ActorEntity wuzixuqiu){
+        EntityWrapper<ActorEntity> ew = new EntityWrapper<ActorEntity>();
  		ew.allEq(MPUtil.allEQMapPre( wuzixuqiu, "wuzixuqiu")); 
-		WuzixuqiuView wuzixuqiuView =  wuzixuqiuService.selectView(ew);
+		ActorView wuzixuqiuView =  actorService.selectView(ew);
 		return R.ok("查询物资需求成功").put("data", wuzixuqiuView);
     }
 	
@@ -92,7 +92,7 @@ public class WuzixuqiuController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-        WuzixuqiuEntity wuzixuqiu = wuzixuqiuService.selectById(id);
+        ActorEntity wuzixuqiu = actorService.selectById(id);
         return R.ok().put("data", wuzixuqiu);
     }
 
@@ -102,7 +102,7 @@ public class WuzixuqiuController {
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") Long id){
-        WuzixuqiuEntity wuzixuqiu = wuzixuqiuService.selectById(id);
+        ActorEntity wuzixuqiu = actorService.selectById(id);
         return R.ok().put("data", wuzixuqiu);
     }
     
@@ -113,10 +113,10 @@ public class WuzixuqiuController {
      * 后端保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody WuzixuqiuEntity wuzixuqiu, HttpServletRequest request){
+    public R save(@RequestBody ActorEntity wuzixuqiu, HttpServletRequest request){
     	wuzixuqiu.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
     	//ValidatorUtils.validateEntity(wuzixuqiu);
-        wuzixuqiuService.insert(wuzixuqiu);
+        actorService.insert(wuzixuqiu);
         return R.ok();
     }
     
@@ -124,10 +124,10 @@ public class WuzixuqiuController {
      * 前端保存
      */
     @RequestMapping("/add")
-    public R add(@RequestBody WuzixuqiuEntity wuzixuqiu, HttpServletRequest request){
+    public R add(@RequestBody ActorEntity wuzixuqiu, HttpServletRequest request){
     	wuzixuqiu.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
     	//ValidatorUtils.validateEntity(wuzixuqiu);
-        wuzixuqiuService.insert(wuzixuqiu);
+        actorService.insert(wuzixuqiu);
         return R.ok();
     }
 
@@ -136,9 +136,9 @@ public class WuzixuqiuController {
      */
     @RequestMapping("/update")
     @Transactional
-    public R update(@RequestBody WuzixuqiuEntity wuzixuqiu, HttpServletRequest request){
+    public R update(@RequestBody ActorEntity wuzixuqiu, HttpServletRequest request){
         //ValidatorUtils.validateEntity(wuzixuqiu);
-        wuzixuqiuService.updateById(wuzixuqiu);//全部更新
+        actorService.updateById(wuzixuqiu);//全部更新
         return R.ok();
     }
     
@@ -148,7 +148,7 @@ public class WuzixuqiuController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-        wuzixuqiuService.deleteBatchIds(Arrays.asList(ids));
+        actorService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
     
@@ -182,7 +182,7 @@ public class WuzixuqiuController {
 			}
 		}
 		
-		Wrapper<WuzixuqiuEntity> wrapper = new EntityWrapper<WuzixuqiuEntity>();
+		Wrapper<ActorEntity> wrapper = new EntityWrapper<ActorEntity>();
 		if(map.get("remindstart")!=null) {
 			wrapper.ge(columnName, map.get("remindstart"));
 		}
@@ -191,7 +191,7 @@ public class WuzixuqiuController {
 		}
 
 
-		int count = wuzixuqiuService.selectCount(wrapper);
+		int count = actorService.selectCount(wrapper);
 		return R.ok().put("count", count);
 	}
 	

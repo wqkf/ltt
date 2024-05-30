@@ -1,7 +1,7 @@
 package com.dao;
 
 import com.entity.TransportEntity;
-import com.entity.WuzileixingEntity;
+import com.entity.BookActorEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
 import com.entity.vo.WuzileixingVO;
-import com.entity.view.WuzileixingView;
+import com.entity.view.BookActorView;
 
 
 /**
@@ -22,15 +22,15 @@ import com.entity.view.WuzileixingView;
  */
 public interface TransportDao extends BaseMapper<TransportEntity> {
 	
-	List<WuzileixingVO> selectListVO(@Param("ew") Wrapper<WuzileixingEntity> wrapper);
+	List<WuzileixingVO> selectListVO(@Param("ew") Wrapper<BookActorEntity> wrapper);
 	
-	WuzileixingVO selectVO(@Param("ew") Wrapper<WuzileixingEntity> wrapper);
+	WuzileixingVO selectVO(@Param("ew") Wrapper<BookActorEntity> wrapper);
 	
-	List<WuzileixingView> selectListView(@Param("ew") Wrapper<WuzileixingEntity> wrapper);
+	List<BookActorView> selectListView(@Param("ew") Wrapper<BookActorEntity> wrapper);
 
-	List<WuzileixingView> selectListView(Pagination page,@Param("ew") Wrapper<WuzileixingEntity> wrapper);
+	List<BookActorView> selectListView(Pagination page, @Param("ew") Wrapper<BookActorEntity> wrapper);
 	
-	WuzileixingView selectView(@Param("ew") Wrapper<WuzileixingEntity> wrapper);
+	BookActorView selectView(@Param("ew") Wrapper<BookActorEntity> wrapper);
 	
 
 }

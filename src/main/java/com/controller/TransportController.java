@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.ThresholdEntity;
 import com.entity.TransportEntity;
-import com.entity.WuzileixingEntity;
+import com.entity.BookActorEntity;
 import com.entity.view.TransportView;
 import com.service.ThresholdService;
 import com.service.TransportService;
@@ -44,9 +44,9 @@ public class TransportController {
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params,WuzileixingEntity wuzileixing,
-		HttpServletRequest request){
-        EntityWrapper<WuzileixingEntity> ew = new EntityWrapper<WuzileixingEntity>();
+    public R page(@RequestParam Map<String, Object> params, BookActorEntity wuzileixing,
+                  HttpServletRequest request){
+        EntityWrapper<BookActorEntity> ew = new EntityWrapper<BookActorEntity>();
 		PageUtils page = transportService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, wuzileixing), params), params));
 
         return R.ok().put("data", page);
@@ -57,9 +57,9 @@ public class TransportController {
      */
 	@IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params,WuzileixingEntity wuzileixing, 
-		HttpServletRequest request){
-        EntityWrapper<WuzileixingEntity> ew = new EntityWrapper<WuzileixingEntity>();
+    public R list(@RequestParam Map<String, Object> params, BookActorEntity wuzileixing,
+                  HttpServletRequest request){
+        EntityWrapper<BookActorEntity> ew = new EntityWrapper<BookActorEntity>();
 		PageUtils page = transportService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, wuzileixing), params), params));
         return R.ok().put("data", page);
     }
@@ -68,8 +68,8 @@ public class TransportController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( WuzileixingEntity wuzileixing){
-       	EntityWrapper<WuzileixingEntity> ew = new EntityWrapper<WuzileixingEntity>();
+    public R list( BookActorEntity wuzileixing){
+       	EntityWrapper<BookActorEntity> ew = new EntityWrapper<BookActorEntity>();
       	ew.allEq(MPUtil.allEQMapPre( wuzileixing, "wuzileixing")); 
         return R.ok().put("data", transportService.selectListView(ew));
     }

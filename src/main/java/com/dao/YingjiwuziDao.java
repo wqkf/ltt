@@ -1,15 +1,15 @@
 package com.dao;
 
-import com.entity.YingjiwuziEntity;
+import com.entity.BookBooklbEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import java.util.List;
-import java.util.Map;
+
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
 import com.entity.vo.YingjiwuziVO;
-import com.entity.view.YingjiwuziView;
+import com.entity.view.BookBooklbView;
 
 
 /**
@@ -19,17 +19,17 @@ import com.entity.view.YingjiwuziView;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-public interface YingjiwuziDao extends BaseMapper<YingjiwuziEntity> {
+public interface YingjiwuziDao extends BaseMapper<BookBooklbEntity> {
 	
-	List<YingjiwuziVO> selectListVO(@Param("ew") Wrapper<YingjiwuziEntity> wrapper);
+	List<YingjiwuziVO> selectListVO(@Param("ew") Wrapper<BookBooklbEntity> wrapper);
 	
-	YingjiwuziVO selectVO(@Param("ew") Wrapper<YingjiwuziEntity> wrapper);
+	YingjiwuziVO selectVO(@Param("ew") Wrapper<BookBooklbEntity> wrapper);
 	
-	List<YingjiwuziView> selectListView(@Param("ew") Wrapper<YingjiwuziEntity> wrapper);
+	List<BookBooklbView> selectListView(@Param("ew") Wrapper<BookBooklbEntity> wrapper);
 
-	List<YingjiwuziView> selectListView(Pagination page,@Param("ew") Wrapper<YingjiwuziEntity> wrapper);
+	List<BookBooklbView> selectListView(Pagination page, @Param("ew") Wrapper<BookBooklbEntity> wrapper);
 	
-	YingjiwuziView selectView(@Param("ew") Wrapper<YingjiwuziEntity> wrapper);
+	BookBooklbView selectView(@Param("ew") Wrapper<BookBooklbEntity> wrapper);
 	
 
 }

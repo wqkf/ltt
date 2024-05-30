@@ -12,50 +12,50 @@ import com.utils.PageUtils;
 import com.utils.Query;
 
 
-import com.dao.WuzixuqiuDao;
-import com.entity.WuzixuqiuEntity;
-import com.service.WuzixuqiuService;
+import com.dao.ActorDao;
+import com.entity.ActorEntity;
+import com.service.ActorService;
 import com.entity.vo.WuzixuqiuVO;
-import com.entity.view.WuzixuqiuView;
+import com.entity.view.ActorView;
 
 @Service("wuzixuqiuService")
-public class WuzixuqiuServiceImpl extends ServiceImpl<WuzixuqiuDao, WuzixuqiuEntity> implements WuzixuqiuService {
+public class ActorServiceImpl extends ServiceImpl<ActorDao, ActorEntity> implements ActorService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<WuzixuqiuEntity> page = this.selectPage(
-                new Query<WuzixuqiuEntity>(params).getPage(),
-                new EntityWrapper<WuzixuqiuEntity>()
+        Page<ActorEntity> page = this.selectPage(
+                new Query<ActorEntity>(params).getPage(),
+                new EntityWrapper<ActorEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<WuzixuqiuEntity> wrapper) {
-		  Page<WuzixuqiuView> page =new Query<WuzixuqiuView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<ActorEntity> wrapper) {
+		  Page<ActorView> page =new Query<ActorView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
  	}
     
     @Override
-	public List<WuzixuqiuVO> selectListVO(Wrapper<WuzixuqiuEntity> wrapper) {
+	public List<WuzixuqiuVO> selectListVO(Wrapper<ActorEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public WuzixuqiuVO selectVO(Wrapper<WuzixuqiuEntity> wrapper) {
+	public WuzixuqiuVO selectVO(Wrapper<ActorEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<WuzixuqiuView> selectListView(Wrapper<WuzixuqiuEntity> wrapper) {
+	public List<ActorView> selectListView(Wrapper<ActorEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public WuzixuqiuView selectView(Wrapper<WuzixuqiuEntity> wrapper) {
+	public ActorView selectView(Wrapper<ActorEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

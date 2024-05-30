@@ -18,10 +18,10 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.annotation.IgnoreAuth;
 
-import com.entity.YingjiwuziEntity;
-import com.entity.view.YingjiwuziView;
+import com.entity.BookBooklbEntity;
+import com.entity.view.BookBooklbView;
 
-import com.service.YingjiwuziService;
+import com.service.BookBooklbService;
 import com.utils.PageUtils;
 import com.utils.R;
 import com.utils.MPUtil;
@@ -37,7 +37,7 @@ import com.utils.MPUtil;
 @RequestMapping("/yingjiwuzi")
 public class YingjiwuziController {
     @Autowired
-    private YingjiwuziService yingjiwuziService;
+    private BookBooklbService bookBooklbService;
 
 
     
@@ -47,10 +47,10 @@ public class YingjiwuziController {
      * 后端列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params,YingjiwuziEntity yingjiwuzi,
-		HttpServletRequest request){
-        EntityWrapper<YingjiwuziEntity> ew = new EntityWrapper<YingjiwuziEntity>();
-		PageUtils page = yingjiwuziService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yingjiwuzi), params), params));
+    public R page(@RequestParam Map<String, Object> params, BookBooklbEntity yingjiwuzi,
+                  HttpServletRequest request){
+        EntityWrapper<BookBooklbEntity> ew = new EntityWrapper<BookBooklbEntity>();
+		PageUtils page = bookBooklbService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yingjiwuzi), params), params));
 
         return R.ok().put("data", page);
     }
@@ -60,10 +60,10 @@ public class YingjiwuziController {
      */
 	@IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params,YingjiwuziEntity yingjiwuzi, 
-		HttpServletRequest request){
-        EntityWrapper<YingjiwuziEntity> ew = new EntityWrapper<YingjiwuziEntity>();
-		PageUtils page = yingjiwuziService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yingjiwuzi), params), params));
+    public R list(@RequestParam Map<String, Object> params, BookBooklbEntity yingjiwuzi,
+                  HttpServletRequest request){
+        EntityWrapper<BookBooklbEntity> ew = new EntityWrapper<BookBooklbEntity>();
+		PageUtils page = bookBooklbService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, yingjiwuzi), params), params));
         return R.ok().put("data", page);
     }
 
@@ -71,20 +71,20 @@ public class YingjiwuziController {
      * 列表
      */
     @RequestMapping("/lists")
-    public R list( YingjiwuziEntity yingjiwuzi){
-       	EntityWrapper<YingjiwuziEntity> ew = new EntityWrapper<YingjiwuziEntity>();
+    public R list( BookBooklbEntity yingjiwuzi){
+       	EntityWrapper<BookBooklbEntity> ew = new EntityWrapper<BookBooklbEntity>();
       	ew.allEq(MPUtil.allEQMapPre( yingjiwuzi, "yingjiwuzi")); 
-        return R.ok().put("data", yingjiwuziService.selectListView(ew));
+        return R.ok().put("data", bookBooklbService.selectListView(ew));
     }
 
 	 /**
      * 查询
      */
     @RequestMapping("/query")
-    public R query(YingjiwuziEntity yingjiwuzi){
-        EntityWrapper< YingjiwuziEntity> ew = new EntityWrapper< YingjiwuziEntity>();
+    public R query(BookBooklbEntity yingjiwuzi){
+        EntityWrapper<BookBooklbEntity> ew = new EntityWrapper<BookBooklbEntity>();
  		ew.allEq(MPUtil.allEQMapPre( yingjiwuzi, "yingjiwuzi")); 
-		YingjiwuziView yingjiwuziView =  yingjiwuziService.selectView(ew);
+		BookBooklbView yingjiwuziView =  bookBooklbService.selectView(ew);
 		return R.ok("查询应急物资成功").put("data", yingjiwuziView);
     }
 	
@@ -93,7 +93,7 @@ public class YingjiwuziController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-        YingjiwuziEntity yingjiwuzi = yingjiwuziService.selectById(id);
+        BookBooklbEntity yingjiwuzi = bookBooklbService.selectById(id);
         return R.ok().put("data", yingjiwuzi);
     }
 
@@ -103,7 +103,7 @@ public class YingjiwuziController {
 	@IgnoreAuth
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") Long id){
-        YingjiwuziEntity yingjiwuzi = yingjiwuziService.selectById(id);
+        BookBooklbEntity yingjiwuzi = bookBooklbService.selectById(id);
         return R.ok().put("data", yingjiwuzi);
     }
     
@@ -114,10 +114,10 @@ public class YingjiwuziController {
      * 后端保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody YingjiwuziEntity yingjiwuzi, HttpServletRequest request){
+    public R save(@RequestBody BookBooklbEntity yingjiwuzi, HttpServletRequest request){
     	yingjiwuzi.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
     	//ValidatorUtils.validateEntity(yingjiwuzi);
-        yingjiwuziService.insert(yingjiwuzi);
+        bookBooklbService.insert(yingjiwuzi);
         return R.ok();
     }
     
@@ -125,10 +125,10 @@ public class YingjiwuziController {
      * 前端保存
      */
     @RequestMapping("/add")
-    public R add(@RequestBody YingjiwuziEntity yingjiwuzi, HttpServletRequest request){
+    public R add(@RequestBody BookBooklbEntity yingjiwuzi, HttpServletRequest request){
     	yingjiwuzi.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
     	//ValidatorUtils.validateEntity(yingjiwuzi);
-        yingjiwuziService.insert(yingjiwuzi);
+        bookBooklbService.insert(yingjiwuzi);
         return R.ok();
     }
 
@@ -137,9 +137,9 @@ public class YingjiwuziController {
      */
     @RequestMapping("/update")
     @Transactional
-    public R update(@RequestBody YingjiwuziEntity yingjiwuzi, HttpServletRequest request){
+    public R update(@RequestBody BookBooklbEntity yingjiwuzi, HttpServletRequest request){
         //ValidatorUtils.validateEntity(yingjiwuzi);
-        yingjiwuziService.updateById(yingjiwuzi);//全部更新
+        bookBooklbService.updateById(yingjiwuzi);//全部更新
         return R.ok();
     }
     
@@ -149,7 +149,7 @@ public class YingjiwuziController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-        yingjiwuziService.deleteBatchIds(Arrays.asList(ids));
+        bookBooklbService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
     
@@ -183,7 +183,7 @@ public class YingjiwuziController {
 			}
 		}
 		
-		Wrapper<YingjiwuziEntity> wrapper = new EntityWrapper<YingjiwuziEntity>();
+		Wrapper<BookBooklbEntity> wrapper = new EntityWrapper<BookBooklbEntity>();
 		if(map.get("remindstart")!=null) {
 			wrapper.ge(columnName, map.get("remindstart"));
 		}
@@ -192,7 +192,7 @@ public class YingjiwuziController {
 		}
 
 
-		int count = yingjiwuziService.selectCount(wrapper);
+		int count = bookBooklbService.selectCount(wrapper);
 		return R.ok().put("count", count);
 	}
 	

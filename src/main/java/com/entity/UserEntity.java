@@ -6,11 +6,13 @@ import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import lombok.Data;
 
 /** 
  * 用户
  */
-@TableName("users")
+@TableName("obj_user")
+@Data
 public class UserEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -20,7 +22,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 用户账号
 	 */
-	private String username;
+	private String nickname;
 	
 	/**
 	 * 密码
@@ -30,48 +32,26 @@ public class UserEntity implements Serializable {
 	/**
 	 * 用户类型
 	 */
-	private String role;
-	
-	private Date addtime;
+	private Integer role;
 
-	public String getUsername() {
-		return username;
-	}
+	/**
+	 * 会员截止日期
+	 */
+	private Date deadline;
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	/**
+	 * 头像
+	 */
+	private String pic;
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	/**
+	 * 是否会员
+	 */
+	private Integer ifvip;
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public Date getAddtime() {
-		return addtime;
-	}
-
-	public void setAddtime(Date addtime) {
-		this.addtime = addtime;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	/**
+	 * 年齡
+	 */
+	private Integer age;
 }

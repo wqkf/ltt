@@ -1,15 +1,15 @@
 package com.dao;
 
-import com.entity.WuzichukuEntity;
+import com.entity.BookEntity;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import java.util.List;
-import java.util.Map;
+
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 
 import org.apache.ibatis.annotations.Param;
 import com.entity.vo.WuzichukuVO;
-import com.entity.view.WuzichukuView;
+import com.entity.view.BookView;
 
 
 /**
@@ -19,17 +19,17 @@ import com.entity.view.WuzichukuView;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-public interface WuzichukuDao extends BaseMapper<WuzichukuEntity> {
+public interface WuzichukuDao extends BaseMapper<BookEntity> {
 	
-	List<WuzichukuVO> selectListVO(@Param("ew") Wrapper<WuzichukuEntity> wrapper);
+	List<WuzichukuVO> selectListVO(@Param("ew") Wrapper<BookEntity> wrapper);
 	
-	WuzichukuVO selectVO(@Param("ew") Wrapper<WuzichukuEntity> wrapper);
+	WuzichukuVO selectVO(@Param("ew") Wrapper<BookEntity> wrapper);
 	
-	List<WuzichukuView> selectListView(@Param("ew") Wrapper<WuzichukuEntity> wrapper);
+	List<BookView> selectListView(@Param("ew") Wrapper<BookEntity> wrapper);
 
-	List<WuzichukuView> selectListView(Pagination page,@Param("ew") Wrapper<WuzichukuEntity> wrapper);
+	List<BookView> selectListView(Pagination page, @Param("ew") Wrapper<BookEntity> wrapper);
 	
-	WuzichukuView selectView(@Param("ew") Wrapper<WuzichukuEntity> wrapper);
+	BookView selectView(@Param("ew") Wrapper<BookEntity> wrapper);
 	
 
 }

@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.annotation.IgnoreAuth;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.entity.ConfigEntity;
-import com.service.ConfigService;
+import com.entity.EvaluateEntity;
+import com.service.EvaluateService;
 import com.utils.MPUtil;
 import com.utils.PageUtils;
 import com.utils.R;
-import com.utils.ValidatorUtils;
 
 /**
  * 登录相关
@@ -30,15 +29,15 @@ import com.utils.ValidatorUtils;
 public class ConfigController{
 	
 	@Autowired
-	private ConfigService configService;
+	private EvaluateService evaluateService;
 
 	/**
      * 列表
      */
     @RequestMapping("/page")
-    public R page(@RequestParam Map<String, Object> params,ConfigEntity config){
-        EntityWrapper<ConfigEntity> ew = new EntityWrapper<ConfigEntity>();
-    	PageUtils page = configService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, config), params), params));
+    public R page(@RequestParam Map<String, Object> params, EvaluateEntity config){
+        EntityWrapper<EvaluateEntity> ew = new EntityWrapper<EvaluateEntity>();
+    	PageUtils page = evaluateService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, config), params), params));
         return R.ok().put("data", page);
     }
     
@@ -47,9 +46,9 @@ public class ConfigController{
      */
     @IgnoreAuth
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params,ConfigEntity config){
-        EntityWrapper<ConfigEntity> ew = new EntityWrapper<ConfigEntity>();
-    	PageUtils page = configService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, config), params), params));
+    public R list(@RequestParam Map<String, Object> params, EvaluateEntity config){
+        EntityWrapper<EvaluateEntity> ew = new EntityWrapper<EvaluateEntity>();
+    	PageUtils page = evaluateService.queryPage(params, MPUtil.sort(MPUtil.between(MPUtil.likeOrEq(ew, config), params), params));
         return R.ok().put("data", page);
     }
 
@@ -58,7 +57,7 @@ public class ConfigController{
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") String id){
-        ConfigEntity config = configService.selectById(id);
+        EvaluateEntity config = evaluateService.selectById(id);
         return R.ok().put("data", config);
     }
     
@@ -68,7 +67,7 @@ public class ConfigController{
     @IgnoreAuth
     @RequestMapping("/detail/{id}")
     public R detail(@PathVariable("id") String id){
-        ConfigEntity config = configService.selectById(id);
+        EvaluateEntity config = evaluateService.selectById(id);
         return R.ok().put("data", config);
     }
     
@@ -77,7 +76,7 @@ public class ConfigController{
      */
     @RequestMapping("/info")
     public R infoByName(@RequestParam String name){
-        ConfigEntity config = configService.selectOne(new EntityWrapper<ConfigEntity>().eq("name", "faceFile"));
+        EvaluateEntity config = evaluateService.selectOne(new EntityWrapper<EvaluateEntity>().eq("name", "faceFile"));
         return R.ok().put("data", config);
     }
     
@@ -85,9 +84,9 @@ public class ConfigController{
      * 保存
      */
     @PostMapping("/save")
-    public R save(@RequestBody ConfigEntity config){
+    public R save(@RequestBody EvaluateEntity config){
 //    	ValidatorUtils.validateEntity(config);
-    	configService.insert(config);
+    	evaluateService.insert(config);
         return R.ok();
     }
 
@@ -95,9 +94,9 @@ public class ConfigController{
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody ConfigEntity config){
+    public R update(@RequestBody EvaluateEntity config){
 //        ValidatorUtils.validateEntity(config);
-        configService.updateById(config);//全部更新
+        evaluateService.updateById(config);//全部更新
         return R.ok();
     }
 
@@ -106,7 +105,7 @@ public class ConfigController{
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-    	configService.deleteBatchIds(Arrays.asList(ids));
+    	evaluateService.deleteBatchIds(Arrays.asList(ids));
         return R.ok();
     }
 }

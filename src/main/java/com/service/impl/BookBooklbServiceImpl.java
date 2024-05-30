@@ -13,49 +13,49 @@ import com.utils.Query;
 
 
 import com.dao.YingjiwuziDao;
-import com.entity.YingjiwuziEntity;
-import com.service.YingjiwuziService;
+import com.entity.BookBooklbEntity;
+import com.service.BookBooklbService;
 import com.entity.vo.YingjiwuziVO;
-import com.entity.view.YingjiwuziView;
+import com.entity.view.BookBooklbView;
 
 @Service("yingjiwuziService")
-public class YingjiwuziServiceImpl extends ServiceImpl<YingjiwuziDao, YingjiwuziEntity> implements YingjiwuziService {
+public class BookBooklbServiceImpl extends ServiceImpl<YingjiwuziDao, BookBooklbEntity> implements BookBooklbService {
 	
 	
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<YingjiwuziEntity> page = this.selectPage(
-                new Query<YingjiwuziEntity>(params).getPage(),
-                new EntityWrapper<YingjiwuziEntity>()
+        Page<BookBooklbEntity> page = this.selectPage(
+                new Query<BookBooklbEntity>(params).getPage(),
+                new EntityWrapper<BookBooklbEntity>()
         );
         return new PageUtils(page);
     }
     
     @Override
-	public PageUtils queryPage(Map<String, Object> params, Wrapper<YingjiwuziEntity> wrapper) {
-		  Page<YingjiwuziView> page =new Query<YingjiwuziView>(params).getPage();
+	public PageUtils queryPage(Map<String, Object> params, Wrapper<BookBooklbEntity> wrapper) {
+		  Page<BookBooklbView> page =new Query<BookBooklbView>(params).getPage();
 	        page.setRecords(baseMapper.selectListView(page,wrapper));
 	    	PageUtils pageUtil = new PageUtils(page);
 	    	return pageUtil;
  	}
     
     @Override
-	public List<YingjiwuziVO> selectListVO(Wrapper<YingjiwuziEntity> wrapper) {
+	public List<YingjiwuziVO> selectListVO(Wrapper<BookBooklbEntity> wrapper) {
  		return baseMapper.selectListVO(wrapper);
 	}
 	
 	@Override
-	public YingjiwuziVO selectVO(Wrapper<YingjiwuziEntity> wrapper) {
+	public YingjiwuziVO selectVO(Wrapper<BookBooklbEntity> wrapper) {
  		return baseMapper.selectVO(wrapper);
 	}
 	
 	@Override
-	public List<YingjiwuziView> selectListView(Wrapper<YingjiwuziEntity> wrapper) {
+	public List<BookBooklbView> selectListView(Wrapper<BookBooklbEntity> wrapper) {
 		return baseMapper.selectListView(wrapper);
 	}
 
 	@Override
-	public YingjiwuziView selectView(Wrapper<YingjiwuziEntity> wrapper) {
+	public BookBooklbView selectView(Wrapper<BookBooklbEntity> wrapper) {
 		return baseMapper.selectView(wrapper);
 	}
 

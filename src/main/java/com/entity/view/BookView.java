@@ -1,8 +1,10 @@
 package com.entity.view;
 
-import com.entity.WuzichukuEntity;
+import com.entity.BookEntity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.beanutils.BeanUtils;
 import java.lang.reflect.InvocationTargetException;
 
@@ -17,20 +19,29 @@ import java.io.Serializable;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-@TableName("wuzichuku")
-public class WuzichukuView  extends WuzichukuEntity implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+@TableName("book")
+@Data
+public class BookView extends BookEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public WuzichukuView(){
+	public BookView(){
 	}
  
- 	public WuzichukuView(WuzichukuEntity wuzichukuEntity){
+ 	public BookView(BookEntity bookEntity){
  	try {
-			BeanUtils.copyProperties(this, wuzichukuEntity);
+			BeanUtils.copyProperties(this, bookEntity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
  		
 	}
+
+	private	String actor;
+
+	/**
+	 * 是否到期 1 到期 0 没有
+	 */
+	private Integer mature;
 }

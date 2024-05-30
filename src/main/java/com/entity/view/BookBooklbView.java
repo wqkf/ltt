@@ -1,6 +1,6 @@
 package com.entity.view;
 
-import com.entity.YingjiwuziEntity;
+import com.entity.BookBooklbEntity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
 import org.apache.commons.beanutils.BeanUtils;
@@ -18,15 +18,15 @@ import java.io.Serializable;
  * @date 2022-07-24 20:15:33
  */
 @TableName("yingjiwuzi")
-public class YingjiwuziView  extends YingjiwuziEntity implements Serializable {
+public class BookBooklbView extends BookBooklbEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public YingjiwuziView(){
+	public BookBooklbView(){
 	}
  
- 	public YingjiwuziView(YingjiwuziEntity yingjiwuziEntity){
+ 	public BookBooklbView(BookBooklbEntity bookBooklbEntity){
  	try {
-			BeanUtils.copyProperties(this, yingjiwuziEntity);
+			BeanUtils.copyProperties(this, bookBooklbEntity);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

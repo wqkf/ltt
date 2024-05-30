@@ -4,7 +4,7 @@
 <mapper namespace="com.dao.WuzileixingDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.WuzileixingEntity" id="wuzileixingMap">
+    <resultMap type="com.entity.BookActorEntity" id="wuzileixingMap">
         <result property="wuzileixing" column="wuzileixing"/>
     </resultMap>
 
@@ -21,14 +21,14 @@
 	</select>
 
     <select id="selectListView"
-		resultType="com.entity.view.WuzileixingView" >
+		resultType="com.entity.view.BookActorView" >
 
 		SELECT  wuzileixing.* FROM wuzileixing  wuzileixing 	        
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
-		resultType="com.entity.view.WuzileixingView" >
+		resultType="com.entity.view.BookActorView" >
 		SELECT * FROM wuzileixing  wuzileixing <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	

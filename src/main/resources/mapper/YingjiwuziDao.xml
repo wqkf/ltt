@@ -4,7 +4,7 @@
 <mapper namespace="com.dao.YingjiwuziDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.entity.YingjiwuziEntity" id="yingjiwuziMap">
+    <resultMap type="com.entity.BookBooklbEntity" id="yingjiwuziMap">
         <result property="wuzibianhao" column="wuzibianhao"/>
         <result property="wuzimingcheng" column="wuzimingcheng"/>
         <result property="wuzileixing" column="wuzileixing"/>
@@ -28,14 +28,14 @@
 	</select>
 
     <select id="selectListView"
-		resultType="com.entity.view.YingjiwuziView" >
+		resultType="com.entity.view.BookBooklbView" >
 
 		SELECT  yingjiwuzi.* FROM yingjiwuzi  yingjiwuzi 	        
         <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	
 	<select id="selectView"
-		resultType="com.entity.view.YingjiwuziView" >
+		resultType="com.entity.view.BookBooklbView" >
 		SELECT * FROM yingjiwuzi  yingjiwuzi <where> 1=1 ${ew.sqlSegment}</where>
 	</select>
 	

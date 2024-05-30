@@ -137,10 +137,7 @@ export default {
       //新增或者编辑提交到后台的方法
       let url = "threshold/update";
       let params = {
-        id: this.book.id,
-        address: this.book.address,
-        category: this.book.category,
-        num: this.book.num,
+
         stockTime: this.book.stockTime,
 
       }

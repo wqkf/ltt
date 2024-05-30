@@ -1,12 +1,21 @@
-package com.service;
+
+package com.dao;
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.entity.BookUserEntity;
 
 import java.util.List;
 import java.util.Map;
 
-public interface CommonService {
+/**
+ * 通用接口
+ */
+public interface BookUserDao extends BaseMapper<BookUserEntity> {
 	List<String> getOption(Map<String, Object> params);
 	
 	Map<String, Object> getFollowByOption(Map<String, Object> params);
+	
+	List<String> getFollowByOption2(Map<String, Object> params);
 	
 	void sh(Map<String, Object> params);
 	
