@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -40,7 +41,7 @@ public class BookEntity<T> implements Serializable {
 	/**
 	 * 主键id
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 
 

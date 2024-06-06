@@ -1,7 +1,7 @@
 package com.entity.view;
 
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.entity.ApproveEntity;
+import com.entity.BooklbEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,7 +19,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @TableName("approve")
 @Data
-public class ApproveView extends ApproveEntity implements Serializable {
+public class BooklbView extends BooklbEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	/**
 	 * 頁碼

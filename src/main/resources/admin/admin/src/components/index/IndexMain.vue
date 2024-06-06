@@ -23,7 +23,7 @@
 		mounted() {
 			let menus = menu.list();
 			this.menuList = menus;
-			this.role = this.$storage.get("role");
+			this.role = 1;
 		},
 		created() {
 			this.init();

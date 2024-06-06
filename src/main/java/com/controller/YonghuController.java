@@ -8,10 +8,12 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
 import com.baomidou.mybatisplus.plugins.Page;
-import com.entity.ApproveEntity;
+import com.entity.BooklbEntity;
 import com.entity.ThresholdEntity;
-import com.service.ApproveService;
+import com.entity.UserEntity;
+import com.service.BooklbService;
 import com.service.ThresholdService;
+import com.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,25 +45,30 @@ import com.utils.MPUtil;
 @RequestMapping("/yonghu")
 public class YonghuController {
     @Autowired
-    private YonghuService yonghuService;
+    private UserService userService;
+
+	@Autowired
+	private YonghuService yonghuService;
 
 	@Autowired
 	private ThresholdService thresholdService;
     
 	@Autowired
-	private ApproveService approveService;
+	private BooklbService booklbService;
 	
 	/**
 	 * 登录
 	 */
 	@IgnoreAuth
 	@RequestMapping(value = "/login")
-	public R login(String username, String password, String captcha, HttpServletRequest request) {
-		YonghuEntity user = yonghuService.selectOne(new EntityWrapper<YonghuEntity>().eq("name", username));
+	public R login(String nickname, String password, String captcha, HttpServletRequest request) {
+		UserEntity user = userService.selectOne(new EntityWrapper<UserEntity>().eq("nickname", nickname));
 		if(user==null || !user.getPassword().equals(password)) {
 			return R.error("账号或密码不正确");
 		}
-		request.getSession().setAttribute("userId", user.getId());
+		if(user.getRole() != 1){
+			return R.error("账号无权限访问");
+		}
 		return R.ok().put("data", user);
 	}
 	
@@ -237,20 +244,7 @@ public class YonghuController {
         return R.ok();
     }
 
-	/**
-	 * 修改
-	 */
-	@RequestMapping("/approve")
-	@Transactional
-	public R approve(@RequestBody ApproveEntity approve, HttpServletRequest request){
-		//ValidatorUtils.validateEntity(yonghu);
-		Long id = (Long)request.getSession().getAttribute("userId");
-		approve.setUserId(id);
-		approve.setStatus("待审批");
-		approveService.insert(approve);
-		return R.ok();
-	}
-    
+
 
     /**
      * 删除

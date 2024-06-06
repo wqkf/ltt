@@ -6,12 +6,9 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import java.lang.reflect.InvocationTargetException;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.beanutils.BeanUtils;
 
 
@@ -22,17 +19,17 @@ import org.apache.commons.beanutils.BeanUtils;
  * @email 
  * @date 2022-07-24 20:15:33
  */
-@TableName("approve")
+@TableName("booklb")
 @Data
-public class ApproveEntity<T> implements Serializable {
+public class BooklbEntity<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
-	public ApproveEntity() {
+	public BooklbEntity() {
 		
 	}
 	
-	public ApproveEntity(T t) {
+	public BooklbEntity(T t) {
 		try {
 			BeanUtils.copyProperties(this, t);
 		} catch (IllegalAccessException | InvocationTargetException e) {
@@ -52,44 +49,6 @@ public class ApproveEntity<T> implements Serializable {
 
 	private String name;
 
-	/**
-	 * 车牌号
-	 */
 
-	private String carNumber;
-
-	/**
-	 * 密码
-	 */
-
-	private String password;
-
-	/**
-	 * 车型
-	 */
-
-	private String model;
-
-	/**
-	 * 年龄
-	 */
-
-	private Integer age;
-
-	/**
-	 * 身份证号
-	 */
-
-	private String idNumber;
-
-	/**
-	 * 审批状态
-	 */
-	private String status;
-
-	/**
-	 * 用户id
-	 */
-	private Long userId;
 
 }

@@ -44,4 +44,16 @@ public class BookView extends BookEntity implements Serializable {
 	 * 是否到期 1 到期 0 没有
 	 */
 	private Integer mature;
+
+	/**
+	 * 页码
+	 */
+	private Integer page=1;
+
+	/**
+	 * 书籍类型
+	 */
+	private Integer categoryId;
+
+	private String categoryName;
 }

@@ -96,7 +96,7 @@ const routes = [{
       }
       ,{
 	path: '/wuzileixing',
-        name: '储备点信息管理',
+        name: '书籍信息管理',
         component: wuzileixing
       }
       ,{

@@ -32,7 +32,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 用户类型
 	 */
-	private Integer role;
+	private Integer role = 0;
 
 	/**
 	 * 会员截止日期
@@ -42,13 +42,13 @@ public class UserEntity implements Serializable {
 	/**
 	 * 头像
 	 */
-	private String pic;
+	private String pic = "https://img01.yzcdn.cn/vant/cat.jpeg";
 
 
 	/**
 	 * 是否会员
 	 */
-	private Integer ifvip;
+	private Integer ifvip = 0;
 
 	/**
 	 * 年齡

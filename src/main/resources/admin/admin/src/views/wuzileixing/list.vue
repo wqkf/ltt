@@ -2,17 +2,8 @@
   <div style="padding: 20px;">
     <!-- 搜索栏 -->
     <el-form :inline="true" class="demo-form-inline" :model="book" ref="book">
-      <el-form-item label="地址信息">
-        <el-input v-model="address" placeholder="地址信息"></el-input>
-      </el-form-item>
-      <el-form-item label="粮食种类">
-        <el-input v-model="category" placeholder="粮食种类"></el-input>
-      </el-form-item>
-      <el-form-item label="存储数量">
-        <el-input v-model="num" placeholder="存储数量"></el-input>
-      </el-form-item>
-      <el-form-item label="入库时间">
-        <el-input v-model="stockTime" placeholder="入库时间"></el-input>
+      <el-form-item label="书籍名称">
+        <el-input v-model="name" placeholder="书籍名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -21,15 +12,21 @@
     </el-form>
     <!-- 数据表格 -->
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column v-if="false" prop="id" label="地址信息" width="180">
+      <el-table-column v-if="false" prop="id" label="书籍名称" width="180">
       </el-table-column>
-      <el-table-column prop="address" label="地址信息" width="180">
+      <el-table-column v-if="false" prop="categoryId" label="类型名称" width="180">
       </el-table-column>
-      <el-table-column prop="category" label="粮食种类" width="180">
+      <el-table-column  prop="name" label="书籍名称" width="180">
       </el-table-column>
-      <el-table-column prop="num" label="粮食存储数量">
+      <el-table-column prop="actor" label="书籍作者" width="180">
       </el-table-column>
-      <el-table-column prop="stockTime" label="粮食入库时间">
+      <el-table-column prop="img" label="书籍封面" width="180">
+      </el-table-column>
+      <el-table-column prop="jianjie" label="简介">
+      </el-table-column>
+      <el-table-column prop="title" label="封面标题">
+      </el-table-column>
+      <el-table-column prop="categoryName" label="书籍类型">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -52,23 +49,31 @@
           <el-input v-model="book.id" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="地址信息" :label-width="formLabelWidth">
-          <el-input v-model="book.address" autocomplete="off"></el-input>
+        <el-form-item label="书籍名称" :label-width="formLabelWidth">
+          <el-input v-model="book.name" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="粮食种类" :label-width="formLabelWidth" prop="category">
-          <el-input v-model="book.category" autocomplete="off"></el-input>
+        <el-form-item label="简介" :label-width="formLabelWidth">
+          <el-input v-model="book.jianjie" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="存储数量" :label-width="formLabelWidth" prop="num">
-          <el-input v-model="book.num" autocomplete="off"></el-input>
+        <el-form-item label="书籍作者" :label-width="formLabelWidth" prop="actor">
+          <el-input v-model="book.actor" autocomplete="off"></el-input>
         </el-form-item>
 
-        <el-form-item label="入库时间" :label-width="formLabelWidth" prop="stockTime">
-          <el-input v-model="book.stockTime" autocomplete="off"></el-input>
-<!--          <el-select v-model="book.booktype" placeholder="请选择书籍类别">-->
-<!--            <el-option :key="'key_'+by.id" v-for="by in booktypes" :label="by.name" :value="by.name"></el-option>-->
-<!--          </el-select>-->
+        <el-form-item label="封面" :label-width="formLabelWidth" prop="img">
+          <el-input v-model="book.img" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="封面标题" :label-width="formLabelWidth" prop="title">
+          <el-input v-model="book.title" autocomplete="off"></el-input>
+        </el-form-item>
+
+        <el-form-item label="书籍类型" :label-width="formLabelWidth" prop="categoryId">
+        <el-select v-model="book.categoryId" placeholder="请选择书籍类别">
+            <el-option :key="'key_'+by.id" v-for="by in booktypes" :label="by.name" :value="by.id">
+            </el-option>
+          </el-select>
         </el-form-item>
 
       </el-form>
@@ -84,7 +89,7 @@
 export default {
   data() {
     return {
-      address: '',
+      name: '',
       category: '',
       num:  '',
       stockTime: '',
@@ -97,16 +102,16 @@ export default {
       dialogFormVisible: false,
       booktypes: [{
         id: 1,
-        name: '言情'
+        name: '文学类'
       }, {
         id: 2,
-        name: '玄幻'
+        name: '学术类'
       }, {
         id: 3,
-        name: '历史'
+        name: '非小说类散文'
       }, {
         id: 4,
-        name: '都市'
+        name: '小说类'
       }],
       formLabelWidth: '100px',
       book: {
@@ -134,6 +139,13 @@ export default {
       }
     }
   },
+  mounted(){
+    let params= {
+      "page": 1
+    }
+    this.query(params)
+  }
+  ,
   methods: {
     del(idx, row) {
       this.$confirm('确定要删除id为' + row.id + '的信息吗, 是否继续?', '提示', {
@@ -141,7 +153,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        let url = "stock/delete";
+        let url = "home/deleteBook?bid=" + row.id;
         this.$http({
           url: url,
           method: "post",
@@ -152,7 +164,13 @@ export default {
               message: "删除成功",
               type: 'success'
             });
-            this.query({});
+            let params = {
+              name: this.name,
+              // num: this.num,
+              // rows: r,
+              page: this.page
+            }
+            this.query(params);
           } else {
             this.$message({
               message: data.msg,
@@ -167,17 +185,9 @@ export default {
     },
     doSub() {
       //新增或者编辑提交到后台的方法
-      let url = "stock/save";
+      let url = "home/save";
       if (this.title == '编辑窗体') {
-        url = "stock/update";
-      }
-      let params = {
-        id: this.book.id,
-        address: this.book.address,
-        category: this.book.category,
-        num: this.book.num,
-        stockTime: this.book.stockTime,
-
+        url = "home/update";
       }
 
       this.$refs['book'].validate((valid) => {
@@ -216,10 +226,12 @@ export default {
       this.dialogFormVisible = false;
       this.book = {
         id: '',
-        address: '',
-        num: '',
-        category: '',
-        stockTime: ''
+        name: '',
+        jianjie: '',
+        categoryId: '',
+        actor: '',
+        img: '',
+        title: '',
       };
 
     },
@@ -229,15 +241,17 @@ export default {
       if (row) {
         this.title = '编辑窗体';
         this.book.id = row.id;
-        this.book.address = row.address;
-        this.book.category = row.category;
-        this.book.num = row.num;
-        this.book.stockTime = row.stockTime;
+        this.book.name = row.name;
+        this.book.categoryId = row.categoryId;
+        this.book.jianjie = row.jianjie;
+        this.book.title = row.title;
+        this.book.img = row.img;
+        this.book.actor = row.actor;
       }
     },
     query(params) {
       //通用查询方法
-      let url = "stock/query";
+      let url = "home/page";
       this.$http({
         url: url,
         method: "post",
@@ -253,7 +267,7 @@ export default {
     onSubmit() {
       //搜索方法
       let params = {
-        address: this.address,
+        name: this.name,
         num: this.num,
         category: this.category,
         stockTime: this.stockTime
@@ -264,7 +278,7 @@ export default {
     handleSizeChange(r) {
       console.log("当前展示的记录数为" + r + "条")
       let params = {
-        address: this.address,
+        name: this.name,
         num: this.num,
         category: this.category,
         stockTime: this.stockTime,
@@ -276,6 +290,7 @@ export default {
     },
     handleCurrentChange(p) {
       console.log("当前展示的页码是第" + p + "页")
+      this.page = p;
       let params = {
         address: this.address,
         num: this.num,

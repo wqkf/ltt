@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.entity.*;
 import com.service.*;
 import org.apache.commons.lang3.StringUtils;
@@ -56,6 +57,9 @@ public class BookController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BooklbService booklbService;
     
 
 
@@ -151,7 +155,51 @@ public class BookController {
         return R.ok().put("data", bookViews);
     }
 
-	 /**
+
+    /**
+     * 分页列表
+     */
+    @RequestMapping("/page")
+    public R list(@RequestBody BookView bookView){
+        EntityWrapper<BookEntity> ew = new EntityWrapper<>();
+        if(StringUtils.isNotBlank(bookView.getName())){
+            ew.like("name", bookView.getName());
+        }
+        Page<BookEntity> page = new Page<>(bookView.getPage(),10);
+        Page<BookView> result = new Page<>(bookView.getPage(),10);
+        Page<BookEntity> bookEntities = bookService.selectPage(page, ew);
+        List<BookView> bookViews = new ArrayList<>();
+        bookEntities.getRecords().forEach(bookEntity -> {
+                BookView view = new BookView();
+            BeanUtils.copyProperties(bookEntity, view);
+            EntityWrapper<BookActorEntity> ew2 = new EntityWrapper<>();
+            EntityWrapper<ActorEntity> ew3 = new EntityWrapper<>();
+            ew2.eq("bookid", bookEntity.getId());
+            BookActorEntity bookActor = bookActorService.selectOne(ew2);
+            if(bookActor != null) {
+                ew3.eq("id", bookActor.getActorid());
+                ActorEntity actorEntity = actorService.selectOne(ew3);
+                view.setActor(actorEntity.getName());
+            }
+            EntityWrapper<BookBooklbEntity> ew1 = new EntityWrapper<>();
+            ew1.eq("bookid", bookEntity.getId());
+            BookBooklbEntity bookBooklbEntity = bookBooklbService.selectOne(ew1);
+            if(bookBooklbEntity != null) {
+                view.setCategoryId(bookBooklbEntity.getBooklbid());
+                EntityWrapper<BooklbEntity> ew5 = new EntityWrapper<>();
+                ew5.eq("id", bookBooklbEntity.getBooklbid());
+                BooklbEntity booklbEntity = booklbService.selectOne(ew5);
+                view.setCategoryName(booklbEntity.getName());
+            }
+            bookViews.add(view);
+        });
+        result.setRecords(bookViews);
+        result.setTotal(bookEntities.getTotal());
+        return R.ok().put("data", result);
+    }
+
+
+    /**
      * 查询
      */
     @RequestMapping("/shoucang")
@@ -198,19 +246,29 @@ public class BookController {
         if(bookUserEntity != null){
             bookUserEntity.setBorrowDate(date);
             bookUserService.updateById(bookUserEntity);
+        }else {
+            bookUser.setBorrowDate(date);
+            bookUserService.insert(bookUser);
         }
-        bookUser.setBorrowDate(date);
-        bookUserService.insert(bookUser);
         return R.ok("借閲成功");
     }
 	
     /**
      * 后端详情
      */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Long id){
-        BookEntity wuzichuku = bookService.selectById(id);
-        return R.ok().put("data", wuzichuku);
+    @RequestMapping("update")
+    public R info(@RequestBody BookView bookView){
+        BookEntity bookEntity = new BookEntity();
+        BeanUtils.copyProperties(bookView, bookEntity);
+        bookService.updateById(bookEntity);
+        EntityWrapper<BookBooklbEntity> ew = new EntityWrapper<>();
+        ew.eq("bookid", bookEntity.getId());
+        bookBooklbService.delete(ew);
+        BookBooklbEntity bookBooklbEntity = new BookBooklbEntity();
+        bookBooklbEntity.setBookid(bookView.getId().intValue());
+        bookBooklbEntity.setBooklbid(bookView.getCategoryId());
+        bookBooklbService.insert(bookBooklbEntity);
+        return R.ok();
     }
 
     /**
@@ -230,10 +288,15 @@ public class BookController {
      * 后端保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody BookEntity wuzichuku, HttpServletRequest request){
-    	wuzichuku.setId(new Date().getTime()+new Double(Math.floor(Math.random()*1000)).longValue());
+    public R save(@RequestBody BookView bookView, HttpServletRequest request){
+        BookEntity bookEntity = new BookEntity();
+        BeanUtils.copyProperties(bookView, bookEntity);
     	//ValidatorUtils.validateEntity(wuzichuku);
-        bookService.insert(wuzichuku);
+        bookService.insert(bookEntity);
+        BookBooklbEntity bookBooklbEntity = new BookBooklbEntity();
+        bookBooklbEntity.setBookid(bookEntity.getId().intValue());
+        bookBooklbEntity.setBooklbid(bookView.getCategoryId());
+        bookBooklbService.insert(bookBooklbEntity);
         return R.ok();
     }
     
@@ -247,17 +310,6 @@ public class BookController {
         bookService.insert(wuzichuku);
         return R.ok();
     }
-
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-    @Transactional
-    public R update(@RequestBody BookEntity wuzichuku, HttpServletRequest request){
-        //ValidatorUtils.validateEntity(wuzichuku);
-        bookService.updateById(wuzichuku);//全部更新
-        return R.ok();
-    }
     
 
     /**
@@ -269,6 +321,18 @@ public class BookController {
         wrapper.eq("userid", uid);
         wrapper.eq("bookid", bid);
         bookUserService.delete(wrapper);
+        return R.ok();
+    }
+
+
+    /**
+     * 删除
+     */
+    @RequestMapping("/deleteBook")
+    public R deleteBook(@RequestParam Integer bid ){
+        Wrapper<BookEntity> wrapper = new EntityWrapper<>();
+        wrapper.eq("id", bid);
+        bookService.delete(wrapper);
         return R.ok();
     }
     

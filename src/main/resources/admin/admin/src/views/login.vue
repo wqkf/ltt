@@ -4,7 +4,7 @@
 
       <div :class="2 == 1 ? 'left' : 2 == 2 ? 'left center' : 'left right'">
         <el-form class="login-form" label-position="left" :label-width="2 == 3 || 2 == 2 ? '30px': '0px'">
-          <div class="title-container"><h3 class="title">粮食应急物流风险预警系统登录</h3></div>
+          <div class="title-container"><h3 class="title">图书馆后台系统登录</h3></div>
           <el-form-item :style='{"padding":"0","boxShadow":"0 0 6px rgba(0,0,0,0)","margin":"0 0 12px 0","borderColor":"rgba(0,0,0,0)","backgroundColor":"rgba(0,0,0,0)","borderRadius":"0","borderWidth":"0","width":"100%","borderStyle":"solid","height":"auto"}' :label="2 == 3 ? '用户名' : ''" :class="'style'+2">
             <span v-if="2 != 3" class="svg-container" style="
 			color:rgba(24, 144, 255, 1);
@@ -48,10 +48,10 @@
 <!--          <el-form-item v-if="roles.length==1" label=" " prop="loginInRole" class="role" style="display: flex;align-items: center;">-->
 <!--          </el-form-item>-->
           <el-button type="primary" @click="login()" class="loginInBt">{{'1' == '1' ? '登录' : 'login'}}</el-button>
-          <el-form-item class="setting">
-            <div class="register" @click="register('yonghu')">运输人员注册入口</div>
-            <!-- <div style="color:rgba(30, 144, 255, 1)" class="reset">修改密码</div> -->
-          </el-form-item>
+<!--          <el-form-item class="setting">-->
+<!--            <div class="register" @click="register('yonghu')">运输人员注册入口</div>-->
+<!--            &lt;!&ndash; <div style="color:rgba(30, 144, 255, 1)" class="reset">修改密码</div> &ndash;&gt;-->
+<!--          </el-form-item>-->
         </el-form>
       </div>
 
@@ -142,12 +142,12 @@ export default {
       // }
 
       this.$http({
-        url: `yonghu/login?username=${this.rulesForm.username}&password=${this.rulesForm.password}`,
+        url: `yonghu/login?nickname=${this.rulesForm.username}&password=${this.rulesForm.password}`,
         method: "post"
       }).then(({ data }) => {
         if (data && data.code === 0) {
           this.$storage.set("Token", data.token);
-          this.$storage.set("role", data.data.role);
+          this.$storage.set("role", 1);
           this.$storage.set("sessionTable", this.tableName);
           this.$storage.set("adminName", this.rulesForm.username);
           this.$router.replace({ path: "/index/" });

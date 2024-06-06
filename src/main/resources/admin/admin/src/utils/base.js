@@ -9,7 +9,7 @@ const base = {
     },
     getProjectName(){
         return {
-            projectName: "粮食应急物流风险预警系统"
+            projectName: "图书馆后台系统"
         } 
     }
 }
